@@ -1,0 +1,33 @@
+<aside class="flex flex-col h-full bg-crypto-surface">
+  <div class="p-8 mb-4">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-crypto-neon rounded-xl flex items-center justify-center shadow-neon-soft">
+        <i class="lucide-layout-grid text-black text-xl"></i>
+      </div>
+      <span class="text-2xl font-bold tracking-tight">CryptoTerminal</span>
+    </div>
+  </div>
+
+  <nav class="flex-1 px-4 space-y-2">
+    @for (item of menuItems(); track item.label) {
+      <a [routerLink]="item.route"
+         routerLinkActive="bg-crypto-neon/10 text-crypto-neon"
+         class="flex items-center gap-4 px-4 py-3 rounded-2xl text-crypto-slate hover:bg-slate-800/50 hover:text-white transition-all group">
+        <i [class]="item.icon + ' text-xl'"></i>
+        <span class="font-medium">{{ item.label }}</span>
+        <div class="ml-auto w-1.5 h-1.5 rounded-full bg-crypto-neon opacity-0 group-[.active]:opacity-100"></div>
+      </a>
+    }
+  </nav>
+
+  <div class="p-6 mt-auto">
+    <div class="p-4 bg-crypto-bg/40 border border-slate-800 rounded-3xl flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-slate-700 to-slate-500 border border-slate-600"></div>
+      <div>
+        <p class="text-sm font-bold">John Doe</p>
+        <p class="text-[10px] text-crypto-slate uppercase">Pro Account</p>
+      </div>
+      <i class="lucide-log-out ml-auto text-crypto-slate hover:text-crypto-red cursor-pointer"></i>
+    </div>
+  </div>
+</aside>
