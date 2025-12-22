@@ -22,9 +22,11 @@
 - **Components:** Keep components under 200 lines. Use sub-components if logic grows.
 
 ## 📝 Git & Workflow
-- **Branch Names:** Must start with `APP-XX` where XX is the corresponding issue number.
-  - Format: `APP-XX-short-description`
-  - Example: `APP-01-diseño-aplicacion`
+- **Branch Names:** Must follow the pattern `feature/APP-XX-titulo-en-español` for feature branches (XX = issue number).
+  - Format: `feature/APP-XX-titulo-corto-en-español`
+  - Example: `feature/APP-01-diseño-aplicacion`
+  - For bug fixes: `bugfix/APP-XX-descripcion`
+  - For refactoring: `refactor/APP-XX-descripcion`
 - **Commit Messages:** Must follow Conventional Commits (feat, fix, refactor, chore, docs) and MUST be in English.
   - Example: `feat(dashboard): implement real-time websocket connection using signals`
 - **Issue Format:**
