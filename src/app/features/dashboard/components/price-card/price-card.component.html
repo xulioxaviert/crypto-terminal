@@ -1,0 +1,29 @@
+<div class="bg-crypto-surface border border-slate-800/50 p-6 rounded-3xl hover:border-crypto-neon/30 transition-all group">
+  <div class="flex justify-between items-start mb-6">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center border border-slate-700">
+        <span class="font-bold text-xs">{{ asset().symbol.substring(0,2) }}</span>
+      </div>
+      <div>
+        <h3 class="font-bold text-white">{{ asset().symbol }}</h3>
+        <p class="text-xs text-crypto-slate">{{ asset().name }}</p>
+      </div>
+    </div>
+    <button class="text-slate-600 hover:text-yellow-500"><i class="lucide-star w-4 h-4"></i></button>
+  </div>
+
+  <div class="mb-4">
+    <span class="text-2xl font-bold text-white tracking-tight">
+      {{ asset().price | currency:'USD':'symbol':'1.2-2' }}
+    </span>
+  </div>
+
+  <div class="flex items-center justify-between">
+    <span [class]="isPositive() ? 'text-crypto-neon' : 'text-crypto-red'" class="text-sm font-bold">
+      {{ isPositive() ? '+' : '' }}{{ asset().change24h }}%
+    </span>
+    <div class="h-8 w-24 bg-slate-800/50 rounded-lg overflow-hidden relative">
+        <div class="absolute inset-0 bg-gradient-to-r" [class]="isPositive() ? 'from-crypto-neon/20' : 'from-crypto-red/20'"></div>
+    </div>
+  </div>
+</div>

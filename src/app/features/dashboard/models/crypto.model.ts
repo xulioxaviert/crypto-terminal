@@ -1,13 +1,9 @@
-// src/app/features/dashboard/models/crypto.model.ts
-
 export interface CryptoAsset {
   readonly id: string;
-  readonly symbol: string;
   readonly name: string;
-  readonly currentPrice: number;
-  readonly priceChangePercentage24h: number;
-  readonly lastUpdated: Date;
-  readonly sparkline: number[]; // Para el mini-gráfico
+  readonly symbol: string;
+  readonly price: number;
+  readonly change24h: number;
+  readonly icon: string;
+  readonly sparkline: number[]; // Para el mini-gráfico (opcional por ahora)
 }
-
-export type MarketTrend = 'up' | 'down' | 'neutral';
