@@ -1,13 +1,9 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { MenuItem } from '../../models/nav.model';
 
-// Definimos una interfaz para mantener el tipado fuerte (Clean Code)
-interface MenuItem {
-  label: string;
-  icon: string;
-  route: string;
-}
+
 
 @Component({
   selector: 'app-sidebar',
