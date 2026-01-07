@@ -1,35 +1,33 @@
 <div
-  class="bg-crypto-surface border border-slate-800/50 p-6 rounded-3xl hover:border-crypto-neon/30 transition-all group"
+  class="bg-crypto-surface border border-slate-800/50 p-8 rounded-3xl hover:border-crypto-neon/30 transition-all group"
 >
-  <div class="flex justify-between items-start mb-6">
-    <div class="flex items-center gap-3">
-      <div
-        class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center border border-slate-700"
-      >
-        <span class="font-bold text-xs">{{ asset().symbol.substring(0, 2) }}</span>
-      </div>
-      <div>
-        <h3 class="font-bold text-white">{{ asset().name }}</h3>
-        <p class="text-xs text-crypto-slate">{{ asset().symbol }}</p>
-      </div>
+  <div class="flex items-start gap-4 mb-8">
+    <div
+      class="w-16 h-16 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center border border-slate-700/50"
+    >
+      <span class="font-bold text-2xl text-orange-500">{{ asset().symbol.substring(0, 1) }}</span>
     </div>
-    <button class="text-slate-600 hover:text-yellow-500">
-      <i class="lucide-star w-4 h-4"></i>
-    </button>
+    <div>
+      <h3 class="font-bold text-white text-lg">{{ asset().name }}</h3>
+      <p class="text-sm text-crypto-slate">{{ asset().symbol }}</p>
+    </div>
   </div>
 
-  <div class="mb-4">
-    <span class="text-2xl font-bold text-white tracking-tight">
+  <div class="mb-6">
+    <span class="text-4xl font-bold text-white tracking-tight">
       {{ asset().price | currency : 'USD' : 'symbol' : '1.2-2' }}
     </span>
   </div>
 
-  <div class="flex items-center justify-between">
-    <div class="flex items-center mr-2 border-r border-slate-700 pr-2">
+  <div class="flex items-center gap-4">
+    <div
+      [class]="isPositive() ? 'bg-crypto-neon/10 border-crypto-neon/20' : 'bg-crypto-red/10 border-crypto-red/20'"
+      class="flex items-center gap-2 px-4 py-2 rounded-xl border"
+    >
       <lucide-icon
         [name]="isPositive() ? 'trending-up' : 'trending-down'"
         [class]="isPositive() ? 'text-crypto-neon' : 'text-crypto-red'"
-        class="text-sm font-bold mr-1"
+        class="text-sm font-bold"
       ></lucide-icon>
       <span
         [class]="isPositive() ? 'text-crypto-neon' : 'text-crypto-red'"
@@ -38,10 +36,10 @@
         {{ isPositive() ? '+' : '' }}{{ asset().change24h }}%
       </span>
     </div>
-    <div class="h-8 w-24 bg-slate-800/50 rounded-lg overflow-hidden relative">
+    <div class="flex-1 h-16 bg-slate-800/30 rounded-xl overflow-hidden relative">
       <div
-        class="absolute inset-0 bg-gradient-to-r"
-        [class]="isPositive() ? 'from-crypto-neon/20' : 'from-crypto-red/20'"
+        class="absolute inset-0 bg-gradient-to-t"
+        [class]="isPositive() ? 'from-crypto-neon/30' : 'from-crypto-red/30'"
       ></div>
     </div>
   </div>
