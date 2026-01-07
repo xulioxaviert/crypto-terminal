@@ -2,7 +2,7 @@
   <div class="p-8 mb-4">
     <div class="flex items-center gap-3">
       <div class="w-10 h-10 bg-crypto-neon rounded-xl flex items-center justify-center shadow-neon-soft">
-        <i class="lucide-layout-grid text-black text-xl"></i>
+        <lucide-icon name="monitor" class="text-black" size="20"></lucide-icon>
       </div>
       <span class="text-2xl font-bold tracking-tight">CryptoTerminal</span>
     </div>
@@ -11,11 +11,10 @@
   <nav class="flex-1 px-4 space-y-2">
     @for (item of menuItems(); track item.label) {
       <a [routerLink]="item.route"
-         routerLinkActive="bg-crypto-neon/10 text-crypto-neon"
-         class="flex items-center gap-4 px-4 py-3 rounded-2xl text-crypto-slate hover:bg-slate-800/50 hover:text-white transition-all group">
+         routerLinkActive="bg-gradient-to-r !from-crypto-neon/30 to-crypto-neon/10 text-crypto-neon border-l-4 !border-crypto-neon"
+         class="flex items-center gap-4 px-4 py-3 rounded-2xl text-crypto-slate hover:bg-slate-800/50 hover:text-white transition-all">
         <lucide-icon [name]="item.icon.replace('lucide-', '')" size="20"></lucide-icon>
         <span class="font-medium">{{ item.label }}</span>
-        <div class="ml-auto w-1.5 h-1.5 rounded-full bg-crypto-neon opacity-0 group-[.active]:opacity-100"></div>
       </a>
     }
   </nav>
@@ -27,7 +26,7 @@
         <p class="text-sm font-bold">John Doe</p>
         <p class="text-[10px] text-crypto-slate uppercase">Pro Account</p>
       </div>
-      <i class="lucide-log-out ml-auto text-crypto-slate hover:text-crypto-red cursor-pointer"></i>
+      <lucide-icon name="log-out" class="ml-auto text-crypto-slate hover:text-crypto-red cursor-pointer" size="18"></lucide-icon>
     </div>
   </div>
 </aside>
