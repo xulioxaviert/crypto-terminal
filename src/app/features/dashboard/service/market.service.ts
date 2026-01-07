@@ -60,7 +60,9 @@ export class MarketService {
       { id: '1', symbol: 'BTC', name: 'Bitcoin' },
       { id: '2', symbol: 'ETH', name: 'Ethereum' },
       { id: '3', symbol: 'SOL', name: 'Solana' },
-      { id: '4', symbol: 'DOGE', name: 'Dogecoin' }
+      { id: '4', symbol: 'DOGE', name: 'Dogecoin' },
+      { id: '5', symbol: 'DOT', name: 'Polkadot' },
+      { id: '6', symbol: 'ADA', name: 'Cardano' },
     ];
 
     return new Map(

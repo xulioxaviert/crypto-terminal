@@ -11,7 +11,7 @@
   <nav class="flex-1 px-4 space-y-2">
     @for (item of menuItems(); track item.label) {
       <a [routerLink]="item.route"
-         routerLinkActive="bg-gradient-to-r !from-crypto-neon/30 to-crypto-neon/10 text-crypto-neon border-l-4 !border-crypto-neon"
+         routerLinkActive="bg-gradient-to-r from-crypto-neon/30 to-crypto-neon/10 text-crypto-neon border-l-4 border-crypto-neon text-white"
          class="flex items-center gap-4 px-4 py-3 rounded-2xl text-crypto-slate hover:bg-slate-800/50 hover:text-white transition-all">
         <lucide-icon [name]="item.icon.replace('lucide-', '')" size="20"></lucide-icon>
         <span class="font-medium">{{ item.label }}</span>

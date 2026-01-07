@@ -1,11 +1,12 @@
 import { Component, computed, input } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { CryptoAsset } from '../../models/crypto.model';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-price-card',
   standalone: true,
-  imports: [CommonModule, CurrencyPipe],
+  imports: [CommonModule, CurrencyPipe, LucideAngularModule],
   templateUrl: './price-card.component.html',
 })
 export class PriceCardComponent {
