@@ -2,13 +2,14 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MenuItem } from '../../models/nav.model';
+import { LucideAngularModule } from 'lucide-angular';
 
 
 
 @Component({
   selector: 'app-sidebar',
   standalone: true, // Estándar en Angular 20
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterLink, RouterLinkActive, LucideAngularModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
@@ -18,9 +19,9 @@ export class SidebarComponent {
   // En versiones legacy usarías un array simple o un Observable.
   readonly menuItems = signal<MenuItem[]>([
     { label: 'Dashboard', icon: 'lucide-layout-grid', route: '/dashboard' },
-    { label: 'Markets', icon: 'lucide-trending-up', route: '/markets' },
-    { label: 'Portfolio', icon: 'lucide-wallet', route: '/portfolio' },
-    { label: 'Wallets', icon: 'lucide-history', route: '/wallets' },
+    { label: 'Markets', icon: 'lucide-activity', route: '/markets' },
+    { label: 'Portfolio', icon: 'lucide-briefcase', route: '/portfolio' },
+    { label: 'Wallets', icon: 'lucide-credit-card', route: '/wallets' },
     { label: 'Settings', icon: 'lucide-settings', route: '/settings' },
   ]);
 

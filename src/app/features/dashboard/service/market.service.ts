@@ -17,12 +17,12 @@ export class MarketService {
   private readonly http = inject(HttpClient);
 
   // 📊 Configuración de assets a monitorear
-  private readonly TRACKED_ASSETS = ['btcusdt', 'ethusdt', 'solusdt', 'dogeusdt'] as const;
+  private readonly TRACKED_ASSETS = ['btcusdt', 'ethusdt', 'solusdt', 'dogeusdt', 'dotusdt', 'adausdt'] as const;
   private readonly WS_URL = `${ENDPOINTS.ws_url}/${this.TRACKED_ASSETS.map(s => `${s}@ticker`).join('/')}`;
 
   // 🔌 WebSocket stream con tipado y manejo de errores
   private readonly marketStream$ = webSocket<BinanceTickerData>(this.WS_URL).pipe(
-    throttleTime(100), // Anti-saturación: 10 updates/segundo máx
+    throttleTime(100),
     map((data) => this.transformBinanceData(data)),
     retry({ delay: 3000 }), // Reconexión automática
     catchError((error) => {
@@ -60,7 +60,9 @@ export class MarketService {
       { id: '1', symbol: 'BTC', name: 'Bitcoin' },
       { id: '2', symbol: 'ETH', name: 'Ethereum' },
       { id: '3', symbol: 'SOL', name: 'Solana' },
-      { id: '4', symbol: 'DOGE', name: 'Dogecoin' }
+      { id: '4', symbol: 'DOGE', name: 'Dogecoin' },
+      { id: '5', symbol: 'DOT', name: 'Polkadot' },
+      { id: '6', symbol: 'ADA', name: 'Cardano' },
     ];
 
     return new Map(
