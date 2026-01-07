@@ -1,9 +1,45 @@
+// 📦 WebSocket Stream Data
+export interface BinanceTickerData {
+  readonly e: string; // Event type
+  readonly E: number; // Event time
+  readonly s: string; // Symbol (ej: BTCUSDT)
+  readonly p: string; // Price change
+  readonly P: string; // Price change percentage 24h
+  readonly w: string; // Weighted average price
+  readonly x: string; // First trade(F)-1 price (first trade before the 24hr rolling window)
+  readonly c: string; // Current/Last price (close)
+  readonly Q: string; // Last quantity
+  readonly b: string; // Best bid price
+  readonly B: string; // Best bid quantity
+  readonly a: string; // Best ask price
+  readonly A: string; // Best ask quantity
+  readonly o: string; // Open price
+  readonly h: string; // High price
+  readonly l: string; // Low price
+  readonly v: string; // Total traded base asset volume
+  readonly q: string; // Total traded quote asset volume
+  readonly O: number; // Statistics open time
+  readonly C: number; // Statistics close time
+  readonly F: number; // First trade ID
+  readonly L: number; // Last trade Id
+  readonly n: number; // Total number of trades
+}
+
+// 📊 Precio actualizado procesado
+export interface PriceUpdate {
+  readonly symbol: string;
+  readonly price: number;
+  readonly change: number;
+}
+
+// 🔄 Deprecated: usar BinanceTickerData
 export interface BinanceTradeDTO {
   readonly s: string; // Symbol
   readonly p: string; // Price
   readonly P: string; // Price change percentage
 }
 
+// 💰 REST API Response
 export interface ResponsePriceCTO {
   symbol: string;
   price: string;
