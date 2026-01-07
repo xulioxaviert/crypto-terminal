@@ -2,6 +2,7 @@
 import { Component, inject } from '@angular/core';
 import { PriceCardComponent } from './components/price-card/price-card.component';
 import { MarketService } from './service/market.service';
+import { PortfolioHeroComponent } from "./components/portfolio-hero/portfolio-hero.component";
 
 @Component({
   selector: 'app-dashboard',
