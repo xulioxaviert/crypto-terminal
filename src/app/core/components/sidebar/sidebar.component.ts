@@ -20,7 +20,7 @@ export class SidebarComponent {
     { label: 'Dashboard', icon: 'lucide-layout-grid', route: '/dashboard' },
     { label: 'Markets', icon: 'lucide-trending-up', route: '/markets' },
     { label: 'Portfolio', icon: 'lucide-wallet', route: '/portfolio' },
-    { label: 'Activity', icon: 'lucide-history', route: '/activity' },
+    { label: 'Wallets', icon: 'lucide-history', route: '/wallets' },
     { label: 'Settings', icon: 'lucide-settings', route: '/settings' },
   ]);
 
