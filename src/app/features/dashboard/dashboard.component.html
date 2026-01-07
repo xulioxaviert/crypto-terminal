@@ -7,9 +7,9 @@
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
     @for (item of assets(); track item.id) {
-      <app-price-card [asset]="item" />
+    <app-price-card [asset]="item" />
     } @empty {
-      <p class="text-crypto-slate">No assets found...</p>
+    <p class="text-crypto-slate">No assets found...</p>
     }
   </div>
 </div>

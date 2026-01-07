@@ -1,1 +1,38 @@
-<p>portfolio-hero works!</p>
+
+<section class="bg-crypto-surface p-10 rounded-[2.5rem] border border-slate-800/50 relative overflow-hidden mb-10">
+  <div class="absolute top-0 right-0 w-64 h-64 bg-crypto-neon/5 blur-[100px] -mr-32 -mt-32"></div>
+
+  <div class="relative z-10">
+    <header class="mb-4">
+      <p class="text-crypto-slate text-sm font-medium uppercase tracking-[0.2em]">
+        Total Portfolio Value
+      </p>
+    </header>
+
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div>
+        <h2 class="text-6xl font-bold text-white tracking-tighter mb-4">
+          {{ summary().totalValue | currency:'USD':'symbol':'1.2-2' }}
+        </h2>
+
+        <div class="flex items-center gap-3">
+          <div class="bg-crypto-neon/10 text-crypto-neon flex items-center gap-2 px-4 py-2 rounded-full font-bold text-sm">
+            <lucide-icon name="trending-up" class="w-4 h-4"></lucide-icon>
+            <span>+{{ summary().change24h | currency }} ({{ summary().changePercentage }}%) today</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <button class="bg-crypto-neon text-black font-bold px-8 py-4 rounded-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-2 shadow-lg shadow-crypto-neon/20">
+          <lucide-icon name="plus" class="w-5 h-5"></lucide-icon>
+          Deposit
+        </button>
+        <button class="bg-slate-800/50 text-white font-bold px-8 py-4 rounded-2xl border border-slate-700 hover:bg-slate-700 transition-all flex items-center gap-2">
+          <lucide-icon name="arrow-up-right" class="w-5 h-5"></lucide-icon>
+          Withdraw
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
