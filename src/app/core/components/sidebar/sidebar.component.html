@@ -13,7 +13,7 @@
       <a [routerLink]="item.route"
          routerLinkActive="bg-crypto-neon/10 text-crypto-neon"
          class="flex items-center gap-4 px-4 py-3 rounded-2xl text-crypto-slate hover:bg-slate-800/50 hover:text-white transition-all group">
-        <i [class]="item.icon + ' text-xl'"></i>
+        <lucide-icon [name]="item.icon.replace('lucide-', '')" size="20"></lucide-icon>
         <span class="font-medium">{{ item.label }}</span>
         <div class="ml-auto w-1.5 h-1.5 rounded-full bg-crypto-neon opacity-0 group-[.active]:opacity-100"></div>
       </a>
