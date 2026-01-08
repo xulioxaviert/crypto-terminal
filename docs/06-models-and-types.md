@@ -5,6 +5,7 @@
 - [BinanceTickerData](#binancetickerdata)
 - [PriceUpdate](#priceupdate)
 - [MenuItem](#menuitem)
+- [UserHolding y PortfolioSummary](#userholding-y-portfoliosummary)
 - [Convenciones de Tipos](#convenciones-de-tipos)
 
 ## 🎯 Filosofía de Tipos
@@ -546,7 +547,6 @@ describe('CryptoAsset Type', () => {
    // ✅ Crear nuevo objeto
    const updated = { ...asset, price: 51000 };
    ```
-
 3. **NO ignorar null/undefined**
    ```typescript
    // ❌ Asumir que existe
@@ -555,6 +555,131 @@ describe('CryptoAsset Type', () => {
    // ✅ Usar optional chaining
    console.log(asset.icon?.length ?? 0);
    ```
+
+---
+
+## 💼 Modelos de Portfolio
+
+### UserHolding
+
+**Ubicación**: [`src/app/features/dashboard/models/portfolio.model.ts`](../src/app/features/dashboard/models/portfolio.model.ts)
+
+**Descripción**: Modelo para representar una posición del usuario en una criptomoneda.
+
+```typescript
+export interface UserHolding {
+  readonly symbol: string;  // "BTC", "ETH", etc.
+  readonly amount: number;  // Cantidad poseída
+}
+```
+
+#### Campos
+
+| Campo | Tipo | Descripción | Ejemplo |
+|-------|------|-------------|---------|
+| `symbol` | `string` | Símbolo de la criptomoneda | `"BTC"` |
+| `amount` | `number` | Cantidad poseída | `1.5` |
+
+#### Uso
+
+```typescript
+// Holdings simulados (futuro: desde backend o wallet)
+const holdings: UserHolding[] = [
+  { symbol: 'BTC', amount: 1.5 },
+  { symbol: 'ETH', amount: 10 },
+  { symbol: 'SOL', amount: 50 },
+  { symbol: 'DOGE', amount: 1000 },
+];
+
+// Calcular valor total
+let totalValue = 0;
+holdings.forEach((holding) => {
+  const asset = marketService.assets().find(a => a.symbol === holding.symbol);
+  if (asset) {
+    totalValue += asset.price * holding.amount;
+  }
+});
+```
+
+---
+
+### PortfolioSummary
+
+**Ubicación**: [`src/app/features/dashboard/models/portfolio.model.ts`](../src/app/features/dashboard/models/portfolio.model.ts)
+
+**Descripción**: Resumen agregado del portafolio del usuario.
+
+```typescript
+export interface PortfolioSummary {
+  readonly totalValue: number;        // Valor total en USD
+  readonly change24h: number;         // Cambio en USD (24h)
+  readonly changePercentage: number;  // Cambio porcentual (24h)
+}
+```
+
+#### Campos
+
+| Campo | Tipo | Descripción | Ejemplo |
+|-------|------|-------------|---------|
+| `totalValue` | `number` | Valor total del portafolio | `125430.25` |
+| `change24h` | `number` | Cambio en USD | `5230.12` |
+| `changePercentage` | `number` | Cambio porcentual | `4.35` |
+
+#### Uso
+
+```typescript
+// Obtenido del PortfolioService
+const summary = portfolioService.summary();
+
+console.log(`Portfolio: $${summary.totalValue.toFixed(2)}`);
+console.log(`24h Change: ${summary.changePercentage > 0 ? '+' : ''}${summary.changePercentage.toFixed(2)}%`);
+```
+
+---
+
+## 📈 Modelos de Gráficos
+
+### ChartData
+
+**Ubicación**: [`src/app/features/dashboard/models/chart.data.model.ts`](../src/app/features/dashboard/models/chart.data.model.ts)
+
+**Descripción**: Modelo para datos de gráficos.
+
+```typescript
+export interface ChartData {
+  readonly symbol: string;          // Símbolo de criptomoneda
+  readonly interval: string;        // Intervalo ("1d", "1h", "15m", etc.)
+  readonly prices: number[];        // Array de precios
+  readonly times: number[];         // Array de timestamps
+  readonly volumes?: number[];      // Volúmenes (opcional)
+}
+```
+
+#### Campos
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| `symbol` | `string` | Símbolo de la criptomoneda |
+| `interval` | `string` | Intervalo de tiempo |
+| `prices` | `number[]` | Array de precios históricos |
+| `times` | `number[]` | Array de timestamps (UTC) |
+| `volumes` | `number[]` | Array de volúmenes (opcional) |
+
+#### Uso con ApexCharts
+
+```typescript
+// Convertir a formato ApexCharts
+const chartSeries = [{
+  name: 'Price',
+  data: chartData.prices
+}];
+
+const chartOptions = {
+  xaxis: {
+    categories: chartData.times.map(t => new Date(t).toLocaleDateString())
+  }
+};
+```
 
 ---
 

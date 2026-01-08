@@ -2,6 +2,8 @@
 
 ## 📋 Índice
 - [MarketService](#marketservice)
+- [PortfolioService](#portfolioservice)
+- [ChartDataService](#chartdataservice)
 - [Gestión de Estado con Signals](#gestión-de-estado-con-signals)
 - [RxJS y WebSocket](#rxjs-y-websocket)
 - [Patrones de Estado](#patrones-de-estado)
@@ -676,9 +678,143 @@ describe('Signals', () => {
    dataSignal = toSignal(this.data$);
    ```
 
+## � PortfolioService
+
+Servicio para gestionar el portafolio del usuario.
+
+### Ubicación
+[`src/app/features/dashboard/service/portfolio.service.ts`](../src/app/features/dashboard/service/portfolio.service.ts)
+
+### Responsabilidades
+
+1. **Gestionar holdings del usuario** (posiciones en criptos)
+2. **Calcular valor total del portafolio** con precios en tiempo real
+3. **Proporcionar resumen del portafolio** (cambios 24h, ganancias, etc.)
+
+### Arquitectura del Servicio
+
+```typescript
+@Injectable({
+  providedIn: 'root'
+})
+export class PortfolioService {
+  private marketService = inject(MarketService);
+
+  // Holdings simulados del usuario
+  private readonly holdings = signal<UserHolding[]>([
+    { symbol: 'BTC', amount: 1.5 },
+    { symbol: 'ETH', amount: 10 },
+    { symbol: 'SOL', amount: 50 },
+    { symbol: 'DOGE', amount: 1000 },
+  ]);
+
+  // Resumen del portafolio calculado en tiempo real
+  public readonly summary = computed<PortfolioSummary>(() => {
+    const prices = this.marketService.assets();
+    let total = 0;
+
+    this.holdings().forEach((holding) => {
+      const asset = prices.find(a => a.symbol === holding.symbol);
+      if (asset) {
+        total += asset.price * holding.amount;
+      }
+    });
+
+    return {
+      totalValue: total,
+      change24h: 0, // Placeholder
+      changePercentage: 0 // Placeholder
+    };
+  });
+}
+```
+
+### Características
+
+- **Reactive Holdings**: Los holdings se pueden actualizar en tiempo real
+- **Computed Summary**: Valor total calculado automáticamente con precios de `MarketService`
+- **Integración directa**: Lee precios en tiempo real de `MarketService`
+- **Type-safe**: Tipado fuerte con modelos `UserHolding` y `PortfolioSummary`
+
+### Métodos Futuros
+
+```typescript
+// Añadir nueva posición
+addHolding(symbol: string, amount: number): void { }
+
+// Actualizar cantidad
+updateHolding(symbol: string, amount: number): void { }
+
+// Eliminar posición
+removeHolding(symbol: string): void { }
+
+// Calcular ganancia/pérdida por holding
+getHoldingPerformance(symbol: string): HoldingPerformance { }
+```
+
+---
+
+## 🔧 ChartDataService
+
+Servicio para gestionar datos de gráficos y visualizaciones.
+
+### Ubicación
+[`src/app/features/dashboard/service/chart-data.service.ts`](../src/app/features/dashboard/service/chart-data.service.ts)
+
+### Responsabilidades
+
+1. **Generar datos de gráficos** (históricos, candlestick, etc.)
+2. **Transformar datos de Binance** a formato compatible con ApexCharts
+3. **Cachear datos de gráficos** para evitar llamadas repetidas
+4. **Proporcionar diferentes períodos** (1D, 1W, 1M, 3M, 1Y)
+
+### Métodos Principales
+
+```typescript
+@Injectable({
+  providedIn: 'root'
+})
+export class ChartDataService {
+  private http = inject(HttpClient);
+
+  // Obtener datos de gráfico para un símbolo
+  getChartData(symbol: string, interval: string = '1d'): Observable<ChartData> {
+    // Llamada a Binance API
+  }
+
+  // Transformar a serie para ApexCharts
+  transformToApexFormat(data: BinanceCandle[]): number[] {
+    // Convertir velas a array de precios
+  }
+
+  // Generar dummy data para preview
+  generateDummyData(length: number = 24): number[] {
+    // Array de datos para gráficos en desarrollo
+  }
+}
+```
+
+### Estado de Implementación
+
+El servicio está parcialmente implementado:
+- ✅ Estructura base
+- ⚠️ Métodos de transformación (en progreso)
+- ⚠️ Integración con API Binance (en progreso)
+
+---
+
+## 🔄 Resumen de Servicios
+
+| Servicio | Estado | Ubicación | Responsabilidad |
+|----------|--------|-----------|-----------------|
+| **MarketService** | ✅ Completo | `service/market.service.ts` | Precios en tiempo real, WebSocket |
+| **PortfolioService** | ✅ Completo | `service/portfolio.service.ts` | Gestión de holdings, cálculo de portafolio |
+| **ChartDataService** | ⚠️ Parcial | `service/chart-data.service.ts` | Datos de gráficos, transformaciones |
+
 ## 🔗 Referencias
 
 - [Angular Signals](https://angular.dev/guide/signals)
 - [RxJS Operators](https://rxjs.dev/api)
 - [WebSocket API](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)
 - [Immutability in JavaScript](https://developer.mozilla.org/en-US/docs/Glossary/Immutable)
+- [ApexCharts Documentation](https://apexcharts.com/docs/)
