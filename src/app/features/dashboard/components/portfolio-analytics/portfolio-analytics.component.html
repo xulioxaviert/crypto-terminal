@@ -1,12 +1,12 @@
 <apx-chart
-  [series]="series()"
-  [chart]="chartConfig().chart"
-  [stroke]="chartConfig().stroke"
-  [colors]="[displayColor()]"
-  [fill]="chartConfig().fill"
-  [tooltip]="chartConfig().tooltip"
-  [xaxis]="chartConfig().xaxis"
-  [yaxis]="chartConfig().yaxis"
-  [grid]="chartConfig().grid"
+  [series]="chartAnalyticsViewModel.series()"
+  [colors]="[chartAnalyticsViewModel.displayColor()]"
+  [chart]="chartAnalyticsViewModel.chartConfig().chart!"
+  [stroke]="chartAnalyticsViewModel.chartConfig().stroke!"
+  [fill]="chartAnalyticsViewModel.chartConfig().fill!"
+  [tooltip]="chartAnalyticsViewModel.chartConfig().tooltip!"
+  [xaxis]="chartAnalyticsViewModel.chartConfig().xaxis!"
+  [yaxis]="chartAnalyticsViewModel.chartConfig().yaxis!"
+  [grid]="chartAnalyticsViewModel.chartConfig().grid!"
 >
 </apx-chart>
