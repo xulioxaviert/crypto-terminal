@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { MarketTrend } from '../../models/market-trend.model';
 import { LucideAngularModule } from 'lucide-angular';
-import { PortfolioAnalyticsComponent } from "../portfolio-analytics/portfolio-analytics.component";
+import { ChartComponent } from "../chart/chart.component";
 
 @Component({
   selector: 'app-market-trends',
-  imports: [CommonModule, LucideAngularModule, PortfolioAnalyticsComponent],
+  imports: [CommonModule, LucideAngularModule, ChartComponent],
   standalone: true,
   templateUrl: './market-trends.component.html',
   styleUrl: './market-trends.component.scss',

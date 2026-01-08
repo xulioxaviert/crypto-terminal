@@ -8,10 +8,11 @@ export class ChartDataService {
   private readonly fallbackSeries = Array(24).fill(50);
   private readonly fallbackColor = '#10b981';
 
-  createPortfolioAnalyticsViewModel(params: {
+  createChartViewModel(params: {
     height: Signal<number>;
     chartData: Signal<number[] | undefined>;
     color: Signal<string>;
+    type?: Signal<'area' | 'line' | 'bar'>;
   }) {
     const hasData = computed(() => {
       const customData = params.chartData();
@@ -19,6 +20,8 @@ export class ChartDataService {
     });
 
     const displayColor = computed(() => (hasData() ? params.color() : this.fallbackColor));
+
+    const chartType = computed(() => params.type?.() ?? 'area');
 
     const series = computed<ApexAxisChartSeries>(() => {
       const customData = params.chartData();
@@ -30,7 +33,7 @@ export class ChartDataService {
 
     const chartConfig = computed<ApexOptions>(() => ({
       chart: {
-        type: 'area',
+        type: chartType(),
         height: params.height(),
         toolbar: { show: false },
         animations: { enabled: true },
@@ -62,6 +65,6 @@ export class ChartDataService {
       },
     }));
 
-    return { hasData, displayColor, series, chartConfig };
+    return { hasData, displayColor, series, chartConfig, chartType };
   }
 }

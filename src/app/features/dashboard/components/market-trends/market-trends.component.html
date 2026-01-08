@@ -5,7 +5,7 @@
       <p class="text-xs text-crypto-slate font-medium">Top movers in the last 24 hours</p>
     </div>
     <button class="text-crypto-neon text-sm font-bold flex items-center gap-1 hover:brightness-110 transition-all">
-      View All Assets 
+      View All Assets
       <lucide-icon name="chevron-right" class="w-4 h-4"></lucide-icon>
     </button>
   </div>
@@ -54,7 +54,7 @@
 
             <td class="px-4 py-4 rounded-r-2xl border-y border-r border-transparent group-hover:border-slate-800/50">
               <div class="w-20 h-8 bg-slate-800/30 rounded-md ml-auto animate-pulse">
-                <app-portfolio-analytics
+                <app-chart
                   [height]="64"
                   [chartData]="asset.sparklineData"
                 />
