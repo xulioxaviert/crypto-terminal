@@ -62,42 +62,63 @@
   - Compilación extremadamente rápida
   - Tree-shaking optimizado
 
+### Librerías Adicionales
+- **ApexCharts**: Visualización de gráficos
+  - Gráficos de área, velas, líneas
+  - Exportación de datos
+  - Temas personalizables
+
+- **Lucide Icons**: Iconos SVG modernos
+  - Cargados vía CDN
+  - Librería ligera
+  - Fácil customización
+
 ## 📁 Estructura del Proyecto
 
 ```
 crypto-terminal/
 │
-├── src/                              # Código fuente
-│   ├── app/                          # Aplicación Angular
-│   │   ├── core/                     # Módulo core
-│   │   │   ├── components/           # Componentes globales
-│   │   │   │   ├── header/           # Header de la app
-│   │   │   │   └── sidebar/          # Sidebar de navegación
-│   │   │   ├── config/               # Configuraciones
-│   │   │   │   ├── api.config.ts     # URLs de APIs
-│   │   │   │   └── endpoints.config.ts # Endpoints específicos
-│   │   │   └── models/               # Modelos compartidos
-│   │   │       └── nav.model.ts      # Modelo de navegación
+├── src/                                    # Código fuente
+│   ├── app/                                # Aplicación Angular
+│   │   ├── core/                           # Módulo core
+│   │   │   ├── components/                 # Componentes globales
+│   │   │   │   ├── header/                 # Header de la app
+│   │   │   │   └── sidebar/                # Sidebar de navegación
+│   │   │   ├── config/                     # Configuraciones
+│   │   │   │   ├── api.config.ts           # URLs de APIs
+│   │   │   │   └── endpoints.config.ts     # Endpoints específicos
+│   │   │   └── models/                     # Modelos compartidos
+│   │   │       └── nav.model.ts            # Modelo de navegación
 │   │   │
-│   │   ├── features/                 # Features de la app
-│   │   │   └── dashboard/            # Dashboard principal
-│   │   │       ├── components/       # Componentes del dashboard
-│   │   │       │   ├── price-card/   # Tarjeta de precio
-│   │   │       │   └── portfolio-hero/ # Hero del portfolio
-│   │   │       ├── models/           # Modelos de dominio
-│   │   │       │   ├── crypto.model.ts # Modelo de crypto asset
-│   │   │       │   └── binance.model.ts # Tipos de Binance API
-│   │   │       ├── service/          # Servicios
-│   │   │       │   ├── market.service.ts # Servicio de mercado
-│   │   │       │   └── market.spec.ts    # Tests del servicio
+│   │   ├── features/                       # Features de la app
+│   │   │   └── dashboard/                  # Dashboard principal
+│   │   │       ├── components/             # Componentes del dashboard
+│   │   │       │   ├── price-card/         # Tarjeta de precio
+│   │   │       │   ├── portfolio-hero/     # Hero del portfolio
+│   │   │       │   ├── portfolio-analytics/ # Gráficos de análisis
+│   │   │       │   ├── markets/            # Vista de mercados
+│   │   │       │   ├── wallets/            # Vista de wallets
+│   │   │       │   └── settings-component/ # Configuración
+│   │   │       ├── models/                 # Modelos de dominio
+│   │   │       │   ├── crypto.model.ts     # Modelo de crypto asset
+│   │   │       │   ├── binance.model.ts    # Tipos de Binance API
+│   │   │       │   ├── portfolio.model.ts  # Modelo de portafolio
+│   │   │       │   └── chart.data.model.ts # Modelo de datos de gráficos
+│   │   │       ├── service/                # Servicios
+│   │   │       │   ├── market.service.ts   # Servicio de mercado
+│   │   │       │   ├── market.spec.ts      # Tests del servicio
+│   │   │       │   ├── portfolio.service.ts # Servicio de portafolio
+│   │   │       │   ├── portfolio.service.spec.ts
+│   │   │       │   ├── chart-data.service.ts # Servicio de gráficos
+│   │   │       │   └── chart-data.service.spec.ts
 │   │   │       ├── dashboard.component.ts
 │   │   │       ├── dashboard.component.html
 │   │   │       └── dashboard.component.spec.ts
 │   │   │
-│   │   ├── app.component.ts          # Componente raíz
-│   │   ├── app.component.html        # Template raíz
-│   │   ├── app.component.scss        # Estilos raíz
-│   │   ├── app.config.ts             # Configuración de la app
+│   │   ├── app.component.ts                # Componente raíz
+│   │   ├── app.component.html              # Template raíz
+│   │   ├── app.component.scss              # Estilos raíz
+│   │   ├── app.config.ts                   # Configuración de la app
 │   │   └── app.routes.ts             # Definición de rutas
 │   │
 │   ├── styles.scss                   # Estilos globales

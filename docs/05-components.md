@@ -6,10 +6,14 @@
 - [SidebarComponent](#sidebarcomponent)
 - [HeaderComponent](#headercomponent)
 
-### Feature Components
+### Feature Components (Dashboard)
 - [DashboardComponent](#dashboardcomponent)
 - [PriceCardComponent](#pricecardcomponent)
 - [PortfolioHeroComponent](#portfolioherocomponent)
+- [PortfolioAnalyticsComponent](#portfolioanalyticscomponent)
+- [MarketsComponent](#marketscomponent)
+- [WalletsComponent](#walletscomponent)
+- [SettingsComponent](#settingscomponent)
 
 ## 🎯 Arquitectura de Componentes
 
@@ -19,7 +23,7 @@ app.component (Root)
 ├── sidebar.component (Core)
 │   └── Navigation Menu
 │
-├── header.component (Core - Futuro)
+├── header.component (Core)
 │   └── Search, Notifications
 │
 └── <router-outlet>
@@ -28,6 +32,18 @@ app.component (Root)
         │
         ├── portfolio-hero.component (Presentation)
         │   └── Total Value Display
+        │
+        ├── portfolio-analytics.component (Presentation)
+        │   └── Chart Data Visualization
+        │
+        ├── markets.component (Feature)
+        │   └── Market Data Display
+        │
+        ├── wallets.component (Feature)
+        │   └── Wallet Information
+        │
+        ├── settings.component (Feature)
+        │   └── App Settings
         │
         └── price-card.component (Presentation) × 4
             ├── BTC Card
@@ -141,7 +157,7 @@ readonly menuItems = signal<MenuItem[]>([
 
 ### HeaderComponent
 
-**Estado**: ⚠️ Planificado (no implementado aún)
+**Estado**: ✅ Implementado
 
 **Responsabilidad**: Barra superior con búsqueda, notificaciones y perfil.
 
@@ -701,6 +717,216 @@ describe('PriceCardComponent', () => {
    ```
 
 3. **NO lógica de negocio en componentes presentacionales**
+
+---
+
+## 📊 Dashboard Sub-Components
+
+### PortfolioAnalyticsComponent
+
+**Ubicación**: [`src/app/features/dashboard/components/portfolio-analytics/portfolio-analytics.component.ts`](../src/app/features/dashboard/components/portfolio-analytics/portfolio-analytics.component.ts)
+
+**Tipo**: Presentational Component
+
+**Responsabilidad**: Mostrar gráficos de análisis del portafolio con ApexCharts.
+
+#### Código
+
+```typescript
+import { Component, computed, inject, input, signal } from '@angular/core';
+import { ChartDataService } from '../../service/chart-data.service';
+import { NgApexchartsModule } from 'ng-apexcharts';
+
+@Component({
+  selector: 'app-portfolio-analytics',
+  imports: [NgApexchartsModule],
+  templateUrl: './portfolio-analytics.component.html',
+  styleUrl: './portfolio-analytics.component.scss',
+  standalone: true,
+})
+export class PortfolioAnalyticsComponent {
+  private chartDataService = inject(ChartDataService);
+
+  // Inputs opcionales para personalizar el gráfico
+  height = input<number>(20);
+  chartData = input<number[]>();
+  color = input<string>('#10b981'); // crypto-neon por defecto
+
+  selectedPeriod = signal('1W');
+
+  // Detectar si los datos están vacíos/cero
+  hasData = computed(() => {
+    const customData = this.chartData();
+    return customData && customData.length > 0 && customData.some(val => val !== 0);
+  });
+
+  // Color dinámico
+  displayColor = computed(() => {
+    return this.hasData() ? this.color() : '#10b981';
+  });
+
+  // Series del gráfico
+  series = computed(() => {
+    const customData = this.chartData();
+    if (customData && customData.length > 0) {
+      return [{ name: 'Price', data: customData }];
+    }
+    return [{ name: 'Price', data: Array(24).fill(50) }];
+  });
+
+  // Configuración ApexCharts
+  chartConfig = computed(() => ({
+    chart: {
+      type: 'area' as const,
+      height: this.height(),
+      toolbar: { show: false },
+      animations: { enabled: true },
+      sparkline: { enabled: true }
+    },
+    stroke: {
+      curve: 'smooth' as const,
+      width: 2
+    },
+    fill: {
+      type: 'gradient',
+      gradient: {
+        shadeIntensity: 1,
+        opacityFrom: 0.45,
+        opacityTo: 0.05,
+        stops: [20, 100, 100, 100]
+      }
+    },
+    colors: [this.displayColor()],
+    yaxis: { show: false }
+  }));
+}
+```
+
+#### Características
+
+- **Gráficos con ApexCharts**: Visualización de datos históricos
+- **Inputs customizables**: `height`, `chartData`, `color`
+- **Computed signals**: Lógica derivada automática
+- **Responsivo**: Se adapta al contenedor
+
+---
+
+### MarketsComponent
+
+**Ubicación**: [`src/app/features/dashboard/components/markets/markets-component.ts`](../src/app/features/dashboard/components/markets/markets-component.ts)
+
+**Tipo**: Feature Component
+
+**Estado**: ⚠️ Skeleton (estructura base)
+
+**Responsabilidad**: Mostrar datos de mercados agregados.
+
+#### Código Actual
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-markets-component',
+  imports: [],
+  templateUrl: './markets-component.html',
+  styleUrl: './markets-component.scss',
+})
+export class MarketsComponent {}
+```
+
+#### Próximas Mejoras
+
+- Integración con `MarketService`
+- Tabla comparativa de mercados
+- Filtros y búsqueda
+- Exportación de datos
+
+---
+
+### WalletsComponent
+
+**Ubicación**: [`src/app/features/dashboard/components/wallets/wallets-component.ts`](../src/app/features/dashboard/components/wallets/wallets-component.ts)
+
+**Tipo**: Feature Component
+
+**Estado**: ⚠️ Skeleton (estructura base)
+
+**Responsabilidad**: Mostrar información de carteras/wallets.
+
+#### Código Actual
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-wallets-component',
+  imports: [],
+  templateUrl: './wallets-component.html',
+  styleUrl: './wallets-component.scss',
+})
+export class WalletsComponent {}
+```
+
+#### Próximas Mejoras
+
+- Listado de wallets conectadas
+- Balance por wallet
+- Transacciones recientes
+- Integración con servicios blockchain
+
+---
+
+### SettingsComponent
+
+**Ubicación**: [`src/app/features/dashboard/components/settings-component/settings-component.ts`](../src/app/features/dashboard/components/settings-component/settings-component.ts)
+
+**Tipo**: Feature Component
+
+**Estado**: ⚠️ Skeleton (estructura base)
+
+**Responsabilidad**: Configuración de la aplicación.
+
+#### Código Actual
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-settings-component',
+  imports: [],
+  templateUrl: './settings-component.html',
+  styleUrl: './settings-component.scss',
+})
+export class SettingsComponent {}
+```
+
+#### Próximas Mejoras
+
+- Preferencias de visualización (tema, idioma)
+- Configuración de alertas
+- API keys y webhooks
+- Datos de usuario
+- Privacy y seguridad
+
+---
+
+## 🔄 Resumen de Estados de Componentes
+
+| Componente | Estado | Ubicación |
+|------------|--------|-----------|
+| **Core** | | |
+| SidebarComponent | ✅ Completo | `core/components/sidebar/` |
+| HeaderComponent | ✅ Completo | `core/components/header/` |
+| **Dashboard Features** | | |
+| DashboardComponent | ✅ Completo | `features/dashboard/` |
+| PriceCardComponent | ✅ Completo | `features/dashboard/components/price-card/` |
+| PortfolioHeroComponent | ⚠️ Parcial | `features/dashboard/components/portfolio-hero/` |
+| PortfolioAnalyticsComponent | ✅ Completo | `features/dashboard/components/portfolio-analytics/` |
+| MarketsComponent | ⚠️ Skeleton | `features/dashboard/components/markets/` |
+| WalletsComponent | ⚠️ Skeleton | `features/dashboard/components/wallets/` |
+| SettingsComponent | ⚠️ Skeleton | `features/dashboard/components/settings-component/` |
+
    ```typescript
    // ❌ NO hacer HTTP calls en PriceCard
    ngOnInit() {

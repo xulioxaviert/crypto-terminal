@@ -6,8 +6,8 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { catchError, map, retry, throttleTime, tap } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CryptoAsset } from '../models/crypto.model';
-import { BinanceTickerData, PriceUpdate } from '../models/binance.model';
-import { of } from 'rxjs';
+import { BinanceTickerData, BinanceKline, PriceUpdate } from '../models/binance.model';
+import { of, forkJoin } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -45,6 +45,9 @@ export class MarketService {
   );
 
   constructor() {
+    // ⚡ Cargar datos históricos del sparkline
+    this.loadSparklineData();
+
     // ⚡ Effect para sincronizar WebSocket → Estado
     effect(() => {
       const update = this.livePriceUpdate();
@@ -56,21 +59,73 @@ export class MarketService {
 
   // 🏗️ Inicialización de assets con estructura completa
   private initializeAssets(): Map<string, CryptoAsset> {
-    const assetConfig: Array<{ symbol: string; name: string; id: string }> = [
-      { id: '1', symbol: 'BTC', name: 'Bitcoin' },
-      { id: '2', symbol: 'ETH', name: 'Ethereum' },
-      { id: '3', symbol: 'SOL', name: 'Solana' },
-      { id: '4', symbol: 'DOGE', name: 'Dogecoin' },
-      { id: '5', symbol: 'DOT', name: 'Polkadot' },
-      { id: '6', symbol: 'ADA', name: 'Cardano' },
+    const assetConfig: Array<{ symbol: string; name: string; id: string; basePrice: number }> = [
+      { id: '1', symbol: 'BTC', name: 'Bitcoin', basePrice: 68000 },
+      { id: '2', symbol: 'ETH', name: 'Ethereum', basePrice: 3800 },
+      { id: '3', symbol: 'SOL', name: 'Solana', basePrice: 150 },
+      { id: '4', symbol: 'DOGE', name: 'Dogecoin', basePrice: 0.18 },
+      { id: '5', symbol: 'DOT', name: 'Polkadot', basePrice: 8.5 },
+      { id: '6', symbol: 'ADA', name: 'Cardano', basePrice: 0.65 },
     ];
 
     return new Map(
-      assetConfig.map(({ id, symbol, name }) => [
+      assetConfig.map(({ id, symbol, name, basePrice }) => [
         symbol,
-        { id, name, symbol, price: 0, change24h: 0, icon: '', sparkline: [] }
+        {
+          id,
+          name,
+          symbol,
+          price: basePrice,
+          change24h: 0,
+          icon: '',
+          sparkline: [] // Se cargará con datos reales
+        }
       ])
     );
+  }
+
+  // 📈 Cargar datos históricos del sparkline desde Binance
+  private loadSparklineData(): void {
+    const symbols = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'DOGEUSDT', 'DOTUSDT', 'ADAUSDT'];
+
+    // Crear requests para cada símbolo
+    const requests = symbols.map(symbol =>
+      this.http.get<BinanceKline[]>(
+        `${this.BASE_URL}/api/v3/klines`,
+        {
+          params: {
+            symbol,
+            interval: '1h',  // Velas de 1 hora
+            limit: '24'       // Últimas 24 horas
+          }
+        }
+      )
+    );
+
+    // Ejecutar todas las peticiones en paralelo
+    forkJoin(requests).subscribe({
+      next: (results) => {
+        results.forEach((klines, index) => {
+          const symbol = symbols[index].replace('USDT', '');
+          const sparklineData = klines.map(kline => parseFloat(kline[4])); // [4] es el precio de cierre
+
+          this.assetsMap.update(currentMap => {
+            const asset = currentMap.get(symbol);
+            if (!asset) return currentMap;
+
+            const newMap = new Map(currentMap);
+            newMap.set(symbol, {
+              ...asset,
+              sparkline: sparklineData
+            });
+            return newMap;
+          });
+        });
+      },
+      error: (error) => {
+        console.error('❌ Error cargando sparkline data:', error);
+      }
+    });
   }
 
   // 🔄 Transformación de datos de Binance
@@ -88,12 +143,16 @@ export class MarketService {
       const asset = currentMap.get(update.symbol);
       if (!asset) return currentMap;
 
+      // Actualizar sparkline: añadir nuevo precio y mantener últimos 24 valores
+      const updatedSparkline = [...asset.sparkline.slice(-23), update.price];
+
       // Crear nuevo Map con el asset actualizado
       const newMap = new Map(currentMap);
       newMap.set(update.symbol, {
         ...asset,
         price: update.price,
-        change24h: update.change
+        change24h: update.change,
+        sparkline: updatedSparkline
       });
 
       return newMap;
