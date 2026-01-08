@@ -21,7 +21,11 @@
 
   <div class="flex items-center gap-4">
     <div
-      [class]="isPositive() ? 'bg-crypto-neon/10 border-crypto-neon/20' : 'bg-crypto-red/10 border-crypto-red/20'"
+      [class]="
+        isPositive()
+          ? 'bg-crypto-neon/10 border-crypto-neon/20'
+          : 'bg-crypto-red/10 border-crypto-red/20'
+      "
       class="flex items-center gap-2 px-4 py-2 rounded-xl border"
     >
       <lucide-icon
@@ -36,11 +40,12 @@
         {{ isPositive() ? '+' : '' }}{{ asset().change24h }}%
       </span>
     </div>
-    <div class="flex-1 h-16 bg-slate-800/30 rounded-xl overflow-hidden relative">
-      <div
-        class="absolute inset-0 bg-gradient-to-t"
-        [class]="isPositive() ? 'from-crypto-neon/30' : 'from-crypto-red/30'"
-      ></div>
+    <div class="flex-1 h-16 rounded-xl overflow-hidden">
+      <app-portfolio-analytics
+        [height]="64"
+        [chartData]="asset().sparkline"
+        [color]="isPositive() ? '#10b981' : '#ef4444'"
+      />
     </div>
   </div>
 </div>
