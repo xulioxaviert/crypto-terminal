@@ -32,6 +32,23 @@ export interface PriceUpdate {
   readonly change: number;
 }
 
+// 📈 Kline/Candlestick data (para sparklines)
+// Formato: [OpenTime, Open, High, Low, Close, Volume, CloseTime, QuoteVolume, Trades, TakerBuyBase, TakerBuyQuote, Ignore]
+export type BinanceKline = [
+  number,  // 0: Open time
+  string,  // 1: Open
+  string,  // 2: High
+  string,  // 3: Low
+  string,  // 4: Close
+  string,  // 5: Volume
+  number,  // 6: Close time
+  string,  // 7: Quote asset volume
+  number,  // 8: Number of trades
+  string,  // 9: Taker buy base volume
+  string,  // 10: Taker buy quote volume
+  string   // 11: Ignore
+];
+
 // 🔄 Deprecated: usar BinanceTickerData
 export interface BinanceTradeDTO {
   readonly s: string; // Symbol
