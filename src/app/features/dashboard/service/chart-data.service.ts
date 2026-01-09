@@ -38,6 +38,7 @@ export class ChartDataService {
         toolbar: { show: false },
         animations: { enabled: true },
         sparkline: { enabled: true },
+        background: 'transparent', // Fondo transparente
       },
       stroke: { curve: 'smooth', width: 2, colors: [displayColor()] },
       fill: {
@@ -53,7 +54,7 @@ export class ChartDataService {
           ],
         },
       },
-      grid: { show: false },
+      grid: { show: false, borderColor: 'transparent', row: { colors: ['transparent'] } },
       xaxis: { labels: { show: false }, axisBorder: { show: false }, axisTicks: { show: false } },
       yaxis: { labels: { show: false } },
       tooltip: {

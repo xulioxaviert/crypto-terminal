@@ -19,14 +19,15 @@
     </span>
   </div>
 
-  <div class="flex items-center gap-2">
+  <div class="grid grid-cols-2 gap-2 items-end">
     <div
       [class]="
         isPositive()
           ? 'bg-crypto-neon/10 border-crypto-neon/20'
           : 'bg-crypto-red/10 border-crypto-red/20'
       "
-      class="flex items-center gap-2 px-4 py-2 rounded-xl border"
+      class="flex items-center justify-center gap-2 px-4 py-2 rounded-xl border w-full"
+      style="height: 40px;"
     >
       <lucide-icon
         [name]="isPositive() ? 'trending-up' : 'trending-down'"
@@ -40,12 +41,14 @@
         {{ isPositive() ? '+' : '' }}{{ asset().change24h }}%
       </span>
     </div>
-    <div class="flex-1 h-16 rounded-xl overflow-hidden">
-      <app-chart
-        [height]="64"
-        [chartData]="asset().sparkline"
-        [color]="isPositive() ? '#10b981' : '#ef4444'"
-      />
+    <div class="w-full flex items-end">
+      <div class="w-full h-[40px] rounded-xl overflow-hidden flex items-end">
+        <app-chart
+          [height]="40"
+          [chartData]="asset().sparkline"
+          [color]="isPositive() ? '#10b981' : '#ef4444'"
+        />
+      </div>
     </div>
   </div>
 </div>
