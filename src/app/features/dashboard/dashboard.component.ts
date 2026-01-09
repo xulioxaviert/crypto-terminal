@@ -19,5 +19,5 @@ export class DashboardComponent {
   private marketService = inject(MarketService);
 
   // Signal reactivo que se actualiza automáticamente
-  assets = this.marketService.assets;
+  assets = this.marketService.userAssets;
 }
