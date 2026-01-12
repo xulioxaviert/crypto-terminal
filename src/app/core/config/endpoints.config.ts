@@ -6,4 +6,5 @@ export const ENDPOINTS = {
   klines: '/klines',
   exchangeInfo: '/exchangeInfo',
   ws_url: 'wss://stream.binance.com:9443/ws',
+  ICON_BASE_URL : 'https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/128/color/'
 };

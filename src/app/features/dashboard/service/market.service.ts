@@ -15,6 +15,7 @@ import { of, forkJoin } from 'rxjs';
 export class MarketService {
   private readonly BASE_URL = API_CONFIG.binance.baseUrl;
   private readonly http = inject(HttpClient);
+  private readonly ICON_BASE_URL = ENDPOINTS.ICON_BASE_URL;
 
   // 📊 Configuración de assets a monitorear
   private readonly TRACKED_ASSETS = [
@@ -91,6 +92,7 @@ export class MarketService {
           price: basePrice,
           change24h: 0,
           icon: '',
+          iconUrl: `${this.ICON_BASE_URL}${symbol.toLowerCase()}.png`,
           sparkline: [] // Se cargará con datos reales
         }
       ])
@@ -173,6 +175,21 @@ export class MarketService {
 
       return newMap;
     });
+  }
+
+  /**
+   * Maneja errores de carga de imágenes proporcionando un fallback.
+   * Siguiendo Clean Code, el nombre es descriptivo de su intención.
+   */
+  handleImageError(event: Event): void {
+    const target = event.target as HTMLImageElement;
+
+    // 🛡️ Evitamos un bucle infinito si la imagen genérica también falla
+    const fallbackSrc = 'assets/icons/crypto/generic.svg';
+
+    if (target.src !== fallbackSrc) {
+      target.src = fallbackSrc;
+    }
   }
 
   // 📡 API REST methods

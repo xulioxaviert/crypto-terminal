@@ -5,11 +5,12 @@ import { MarketService } from './service/market.service';
 import { PortfolioHeroComponent } from "./components/portfolio-hero/portfolio-hero.component";
 import { MarketTrendsComponent } from "./components/market-trends/market-trends.component";
 import { CommonModule } from '@angular/common';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [PriceCardComponent, MarketTrendsComponent, CommonModule],
+  imports: [PriceCardComponent, MarketTrendsComponent, CommonModule, LucideAngularModule],
   templateUrl: './dashboard.component.html'
 })
 export class DashboardComponent {
