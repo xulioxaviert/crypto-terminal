@@ -1,11 +1,12 @@
 import { Component, inject, input } from '@angular/core';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { ChartDataService } from '../../service/chart-data.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-chart',
   standalone: true,
-  imports: [NgApexchartsModule],
+  imports: [NgApexchartsModule, CommonModule],
   templateUrl: './chart.component.html',
   styleUrl: './chart.component.scss',
 })

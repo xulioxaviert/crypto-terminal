@@ -1,31 +1,35 @@
-<div class="w-full px-4 py-4">
-  <header class="flex items-center gap-6 rounded-2xl bg-[#0b1429] px-6 py-4 text-slate-100 shadow-2xl shadow-black/30">
-    <div class="flex items-center gap-3">
-      <div class="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-emerald-400 via-emerald-500 to-emerald-700 text-xl font-bold text-[#0b1429] shadow-lg shadow-emerald-500/30">
-        B
-      </div>
-      <div class="flex flex-col gap-1">
-        <h2 class="text-xl font-bold leading-tight">Market Overview</h2>
-        <div class="flex items-center gap-2 text-sm text-slate-400">
-          <span>Dashboard</span>
-          <span class="text-slate-500">›</span>
-          <span class="font-semibold text-emerald-400">Live Data</span>
+<header
+  class="h-20 border-b border-slate-800/50 bg-crypto-dark/50 backdrop-blur-md px-8 flex items-center justify-between sticky top-0 z-50"
+>
+  <div class="flex flex-col">
+    <h1 class="text-xl font-bold text-white tracking-tight">Market Overview</h1>
+    <nav
+      class="flex items-center gap-2 text-[10px] font-medium uppercase tracking-widest text-crypto-slate"
+    >
+      <span>{{ currentRoute.parent }}</span>
+      <lucide-icon name="chevron-right" class="w-3 h-3"></lucide-icon>
+      <span class="text-crypto-neon">{{ currentRoute.child }}</span>
+    </nav>
+  </div>
+
+  <div class="hidden lg:flex relative md:items-end group">
+    <app-header-search />
+
+    <div class="flex items-center gap-4 ml-2">
+      <button
+        class="relative p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 transition-all"
+      >
+        <lucide-icon name="bell" class="w-5 h-5"></lucide-icon>
+        <span
+          class="absolute top-2.5 right-2.5 w-2 h-2 bg-crypto-red rounded-full border-2 border-slate-900"
+        ></span>
+      </button>
+
+      <div class="flex items-center gap-3 pl-4 border-l border-slate-800 md:hidden">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-crypto-neon to-blue-500 p-0.5">
+          <div class="w-full h-full rounded-full bg-slate-900 border-2 border-crypto-dark"></div>
         </div>
       </div>
     </div>
-
-    <div class="ml-auto flex items-center gap-4">
-      <app-header-search class="w-[320px] max-w-[420px]"></app-header-search>
-
-      <button
-        type="button"
-        aria-label="Notificaciones"
-        class="relative grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/5 text-slate-200 transition hover:border-white/20 hover:text-white"
-      >
-        <span class="absolute right-2 top-2 h-2 w-2 rounded-full bg-red-500 shadow-[0_0_0_6px_rgba(248,113,113,0.2)]"></span>
-        <span class="text-lg">🔔</span>
-      </button>
-    </div>
-  </header>
-</div>
-
+  </div>
+</header>
