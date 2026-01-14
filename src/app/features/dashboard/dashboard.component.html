@@ -2,14 +2,33 @@
   <div class="flex items-center gap-2 text-crypto-neon">
     <i class="lucide-trending-up w-5 h-5"></i>
     <h2 class="text-lg font-bold text-white">Live Market Prices</h2>
-    <span class="ml-auto text-xs text-crypto-slate hover:text-crypto-neon cursor-pointer">View All Markets ></span>
+    <span class="ml-auto text-xs text-crypto-slate hover:text-crypto-neon cursor-pointer"
+      >View All Markets ></span
+    >
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
     @for (item of assets(); track item.id) {
     <app-price-card [asset]="item" />
     } @empty {
     <p class="text-crypto-slate">No assets found...</p>
     }
   </div>
+</div>
+<div class="space-y-2 rounded-3xl p-3 bg-crypto-surface border border-slate-800/50 mt-4 mb-4">
+  <div class="flex items-center justify-between mb-8">
+    <div class="space-y-1">
+      <h3 class="text-xl font-bold text-white tracking-tight">Market Trends</h3>
+      <p class="text-xs text-crypto-slate font-medium">Top movers in the last 24 hours</p>
+    </div>
+    <button
+      class="text-crypto-neon text-sm font-bold flex items-center gap-1 hover:brightness-110 transition-all"
+    >
+      View All Assets
+      <lucide-icon name="chevron-right" class="w-4 h-4"></lucide-icon>
+    </button>
+  </div>
+  @for (item of assets(); track item.id) {
+    <app-market-trends [asset]="item"/>
+  }
 </div>

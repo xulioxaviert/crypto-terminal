@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { PortfolioService } from '../../service/portfolio.service';
-import { CurrencyPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-portfolio-hero',
-  imports: [CurrencyPipe, LucideAngularModule],
+  imports: [CurrencyPipe, LucideAngularModule, CommonModule],
   templateUrl: './portfolio-hero.component.html',
   styleUrl: './portfolio-hero.component.html',
 })
