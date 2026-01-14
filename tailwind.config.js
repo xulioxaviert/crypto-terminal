@@ -7,44 +7,26 @@ module.exports = {
     extend: {
       colors: {
         // Backgrounds - Dark theme based on design
-        'crypto-dark': '#0a0e1a',
-        'crypto-dark-secondary': '#151b2e',
-        'crypto-card': '#1a2332',
-        'crypto-sidebar': '#0f1419',
-        'crypto-bg-hover': '#222b3d',
+        'crypto-bg': '#0a0e1a',
+        'crypto-surface': '#151b2e',
+        'crypto-card': '#1e2837',
 
         // Text colors
-        'crypto-text': {
-          primary: '#ffffff',
-          secondary: '#8b93a7',
-          muted: '#525866',
-        },
+        'crypto-slate': '#94a3b8',
+        'crypto-muted': '#64748b',
 
-        // Brand colors - Green for positive, Red for negative
-        'crypto-green': {
-          DEFAULT: '#00ff88',
-          dark: '#00cc6a',
-          light: '#66ffaa',
-        },
-        'crypto-red': {
-          DEFAULT: '#ff0055',
-          dark: '#cc0044',
-          light: '#ff3377',
-        },
+        // Brand color - Green neon
+        'crypto-neon': '#38ff14',
 
-        // Accent neon colors
-        'crypto-neon': {
-          cyan: '#00f0ff',
-          magenta: '#ff00ff',
-          purple: '#b800ff',
-          yellow: '#ffff00',
-        },
+        // Positive/Negative indicators
+        'crypto-green': '#38ff14',
+        'crypto-red': '#ff2a2a',
 
-        // UI elements
+        // Border
         'crypto-border': '#2a3344',
-        'crypto-hover': '#222b3d',
       },
       boxShadow: {
+        'neon-soft': '0 0 20px rgba(0, 255, 136, 0.3)',
         'neon-green': '0 0 10px rgba(0, 255, 136, 0.5), 0 0 20px rgba(0, 255, 136, 0.3)',
         'neon-green-strong': '0 0 15px rgba(0, 255, 136, 0.7), 0 0 30px rgba(0, 255, 136, 0.5)',
         'neon-red': '0 0 10px rgba(255, 0, 85, 0.5), 0 0 20px rgba(255, 0, 85, 0.3)',
