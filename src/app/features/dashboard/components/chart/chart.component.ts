@@ -17,11 +17,15 @@ export class ChartComponent {
   chartData = input<number[]>();
   color = input<string>('#10b981');
   type = input<'area' | 'line' | 'bar'>('area');
+  xAxis = input<boolean>(true);
+  yAxis = input<boolean>(true);
 
   vm = this.chartDataService.createChartViewModel({
     height: this.height,
     chartData: this.chartData,
     color: this.color,
     type: this.type,
+    xAxis: this.xAxis,
+    yAxis: this.yAxis,
   });
 }
