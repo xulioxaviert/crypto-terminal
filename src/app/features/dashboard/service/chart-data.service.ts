@@ -13,6 +13,8 @@ export class ChartDataService {
     chartData: Signal<number[] | undefined>;
     color: Signal<string>;
     type?: Signal<'area' | 'line' | 'bar'>;
+    xAxis:Signal<boolean>;
+    yAxis:Signal<boolean>;
   }) {
     const hasData = computed(() => {
       const customData = params.chartData();
@@ -20,9 +22,7 @@ export class ChartDataService {
     });
 
     const displayColor = computed(() => (hasData() ? params.color() : this.fallbackColor));
-
     const chartType = computed(() => params.type?.() ?? 'area');
-
     const series = computed<ApexAxisChartSeries>(() => {
       const customData = params.chartData();
       if (customData && customData.length > 0) {
@@ -38,7 +38,7 @@ export class ChartDataService {
         toolbar: { show: false },
         animations: { enabled: true },
         sparkline: { enabled: true },
-        background: 'transparent', // Fondo transparente
+        background: 'transparent',
       },
       stroke: { curve: 'smooth', width: 2, colors: [displayColor()] },
       fill: {

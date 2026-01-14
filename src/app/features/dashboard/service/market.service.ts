@@ -109,7 +109,7 @@ export class MarketService {
     // Crear requests para cada símbolo
     const requests = symbols.map(symbol =>
       this.http.get<BinanceKline[]>(
-        `${this.BASE_URL}/api/v3/klines`,
+        `${this.BASE_URL}/klines`,
         {
           params: {
             symbol,
