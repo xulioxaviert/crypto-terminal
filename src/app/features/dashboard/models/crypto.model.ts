@@ -5,5 +5,6 @@ export interface CryptoAsset {
   readonly price: number;
   readonly change24h: number;
   readonly icon: string;
-  readonly sparkline: number[]; // Para el mini-gráfico (opcional por ahora)
+  readonly iconUrl: string;
+  readonly sparkline: number[]; 
 }
