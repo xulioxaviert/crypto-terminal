@@ -3,11 +3,14 @@ import { Component, inject } from '@angular/core';
 import { PriceCardComponent } from './components/price-card/price-card.component';
 import { MarketService } from './service/market.service';
 import { PortfolioHeroComponent } from "./components/portfolio-hero/portfolio-hero.component";
+import { MarketTrendsComponent } from "./components/market-trends/market-trends.component";
+import { CommonModule } from '@angular/common';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [PriceCardComponent],
+  imports: [PriceCardComponent, MarketTrendsComponent, CommonModule, LucideAngularModule],
   templateUrl: './dashboard.component.html'
 })
 export class DashboardComponent {
@@ -18,5 +21,5 @@ export class DashboardComponent {
   private marketService = inject(MarketService);
 
   // Signal reactivo que se actualiza automáticamente
-  assets = this.marketService.assets;
+  assets = this.marketService.userAssets;
 }

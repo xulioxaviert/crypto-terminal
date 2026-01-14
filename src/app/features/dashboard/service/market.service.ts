@@ -15,9 +15,13 @@ import { of, forkJoin } from 'rxjs';
 export class MarketService {
   private readonly BASE_URL = API_CONFIG.binance.baseUrl;
   private readonly http = inject(HttpClient);
+  private readonly ICON_BASE_URL = ENDPOINTS.ICON_BASE_URL;
 
   // 📊 Configuración de assets a monitorear
-  private readonly TRACKED_ASSETS = ['btcusdt', 'ethusdt', 'solusdt', 'dogeusdt', 'dotusdt', 'adausdt'] as const;
+  private readonly TRACKED_ASSETS = [
+    'btcusdt', 'ethusdt', 'solusdt', 'dogeusdt', 'dotusdt', 'adausdt',
+    'xrpusdt', 'bnbusdt', 'maticusdt', 'ltcusdt'
+  ] as const;
   private readonly WS_URL = `${ENDPOINTS.ws_url}/${this.TRACKED_ASSETS.map(s => `${s}@ticker`).join('/')}`;
 
   // 🔌 WebSocket stream con tipado y manejo de errores
@@ -40,8 +44,14 @@ export class MarketService {
   );
 
   // 📊 Signal derivado público (solo lectura)
+  // Todos los assets (para la tabla de tendencias)
   public readonly assets = computed(() =>
     Array.from(this.assetsMap().values())
+  );
+
+  // Solo 6 assets principales para el usuario (puedes ajustar el criterio de selección)
+  public readonly userAssets = computed(() =>
+    Array.from(this.assetsMap().values()).slice(0, 6)
   );
 
   constructor() {
@@ -66,6 +76,10 @@ export class MarketService {
       { id: '4', symbol: 'DOGE', name: 'Dogecoin', basePrice: 0.18 },
       { id: '5', symbol: 'DOT', name: 'Polkadot', basePrice: 8.5 },
       { id: '6', symbol: 'ADA', name: 'Cardano', basePrice: 0.65 },
+      { id: '7', symbol: 'XRP', name: 'Ripple', basePrice: 0.55 },
+      { id: '8', symbol: 'BNB', name: 'Binance Coin', basePrice: 320 },
+      { id: '9', symbol: 'MATIC', name: 'Polygon', basePrice: 0.85 },
+      { id: '10', symbol: 'LTC', name: 'Litecoin', basePrice: 75 },
     ];
 
     return new Map(
@@ -78,6 +92,7 @@ export class MarketService {
           price: basePrice,
           change24h: 0,
           icon: '',
+          iconUrl: `${this.ICON_BASE_URL}${symbol.toLowerCase()}.png`,
           sparkline: [] // Se cargará con datos reales
         }
       ])
@@ -86,12 +101,15 @@ export class MarketService {
 
   // 📈 Cargar datos históricos del sparkline desde Binance
   private loadSparklineData(): void {
-    const symbols = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'DOGEUSDT', 'DOTUSDT', 'ADAUSDT'];
+    const symbols = [
+      'BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'DOGEUSDT', 'DOTUSDT', 'ADAUSDT',
+      'XRPUSDT', 'BNBUSDT', 'MATICUSDT', 'LTCUSDT'
+    ];
 
     // Crear requests para cada símbolo
     const requests = symbols.map(symbol =>
       this.http.get<BinanceKline[]>(
-        `${this.BASE_URL}/api/v3/klines`,
+        `${this.BASE_URL}/klines`,
         {
           params: {
             symbol,
@@ -157,6 +175,21 @@ export class MarketService {
 
       return newMap;
     });
+  }
+
+  /**
+   * Maneja errores de carga de imágenes proporcionando un fallback.
+   * Siguiendo Clean Code, el nombre es descriptivo de su intención.
+   */
+  handleImageError(event: Event): void {
+    const target = event.target as HTMLImageElement;
+
+    // 🛡️ Evitamos un bucle infinito si la imagen genérica también falla
+    const fallbackSrc = 'assets/icons/crypto/generic.svg';
+
+    if (target.src !== fallbackSrc) {
+      target.src = fallbackSrc;
+    }
   }
 
   // 📡 API REST methods
