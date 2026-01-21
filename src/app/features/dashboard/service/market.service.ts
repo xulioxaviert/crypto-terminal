@@ -1,13 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { catchError, forkJoin, map, of, retry, throttleTime } from 'rxjs';
+import { webSocket } from 'rxjs/webSocket';
 import { API_CONFIG } from '../../../core/config/api.config';
 import { ENDPOINTS } from '../../../core/config/endpoints.config';
-import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import { catchError, map, retry, throttleTime, tap } from 'rxjs';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { BinanceKline, BinanceTickerData, PriceUpdate } from '../models/binance.model';
 import { CryptoAsset } from '../models/crypto.model';
-import { BinanceTickerData, BinanceKline, PriceUpdate } from '../models/binance.model';
-import { of, forkJoin } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,34 +16,34 @@ export class MarketService {
   private readonly http = inject(HttpClient);
   private readonly ICON_BASE_URL = ENDPOINTS.ICON_BASE_URL;
 
-  // 📊 Configuración de assets a monitorear
+  // Configuración de assets a monitorear
   private readonly TRACKED_ASSETS = [
     'btcusdt', 'ethusdt', 'solusdt', 'dogeusdt', 'dotusdt', 'adausdt',
     'xrpusdt', 'bnbusdt', 'maticusdt', 'ltcusdt'
   ] as const;
   private readonly WS_URL = `${ENDPOINTS.ws_url}/${this.TRACKED_ASSETS.map(s => `${s}@ticker`).join('/')}`;
 
-  // 🔌 WebSocket stream con tipado y manejo de errores
+  // WebSocket stream con tipado y manejo de errores
   private readonly marketStream$ = webSocket<BinanceTickerData>(this.WS_URL).pipe(
     throttleTime(100),
     map((data) => this.transformBinanceData(data)),
-    retry({ delay: 3000 }), // Reconexión automática
+    retry({ delay: 3000 }),
     catchError((error) => {
-      console.error('❌ WebSocket error:', error);
-      return of(null); // Retorna null en caso de error
+      console.error('WebSocket error:', error);
+      return of(null);
     })
   );
 
-  // 📡 Signal público del stream (puede ser undefined)
+  // Signal público del stream de precios en vivo
   public readonly livePriceUpdate = toSignal(this.marketStream$);
 
-  // 🗺️ Estado central: Map para búsquedas O(1)
+  // Estado central: Map para búsquedas O(1)
   private readonly assetsMap = signal<Map<string, CryptoAsset>>(
     this.initializeAssets()
   );
 
-  // 📊 Signal derivado público (solo lectura)
-  // Todos los assets (para la tabla de tendencias)
+  // Signal derivado público (solo lectura)
+  // Todos los assets para la tabla de tendencias
   public readonly assets = computed(() =>
     Array.from(this.assetsMap().values())
   );
@@ -55,10 +54,10 @@ export class MarketService {
   );
 
   constructor() {
-    // ⚡ Cargar datos históricos del sparkline
+    // Cargar datos históricos del sparkline
     this.loadSparklineData();
 
-    // ⚡ Effect para sincronizar WebSocket → Estado
+    // Effect para sincronizar WebSocket con estado
     effect(() => {
       const update = this.livePriceUpdate();
       if (update) {
@@ -67,7 +66,7 @@ export class MarketService {
     });
   }
 
-  // 🏗️ Inicialización de assets con estructura completa
+  // Inicialización de assets con estructura completa
   private initializeAssets(): Map<string, CryptoAsset> {
     const assetConfig: Array<{ symbol: string; name: string; id: string; basePrice: number }> = [
       { id: '1', symbol: 'BTC', name: 'Bitcoin', basePrice: 68000 },
@@ -99,7 +98,7 @@ export class MarketService {
     );
   }
 
-  // 📈 Cargar datos históricos del sparkline desde Binance
+  // Cargar datos históricos del sparkline desde Binance
   private loadSparklineData(): void {
     const symbols = [
       'BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'DOGEUSDT', 'DOTUSDT', 'ADAUSDT',
@@ -125,7 +124,7 @@ export class MarketService {
       next: (results) => {
         results.forEach((klines, index) => {
           const symbol = symbols[index].replace('USDT', '');
-          const sparklineData = klines.map(kline => parseFloat(kline[4])); // [4] es el precio de cierre
+          const sparklineData = klines.map(kline => parseFloat(kline[4]));
 
           this.assetsMap.update(currentMap => {
             const asset = currentMap.get(symbol);
@@ -141,12 +140,12 @@ export class MarketService {
         });
       },
       error: (error) => {
-        console.error('❌ Error cargando sparkline data:', error);
+        console.error('Error cargando sparkline data:', error);
       }
     });
   }
 
-  // 🔄 Transformación de datos de Binance
+  // Transformación de datos de Binance a formato interno
   private transformBinanceData(data: BinanceTickerData): PriceUpdate {
     return {
       symbol: data.s.replace('USDT', ''),
@@ -155,7 +154,7 @@ export class MarketService {
     };
   }
 
-  // ✏️ Actualización inmutable del estado
+  // Actualización inmutable del estado
   private updateAssetPrice(update: PriceUpdate): void {
     this.assetsMap.update(currentMap => {
       const asset = currentMap.get(update.symbol);
@@ -179,12 +178,11 @@ export class MarketService {
 
   /**
    * Maneja errores de carga de imágenes proporcionando un fallback.
-   * Siguiendo Clean Code, el nombre es descriptivo de su intención.
    */
   handleImageError(event: Event): void {
     const target = event.target as HTMLImageElement;
 
-    // 🛡️ Evitamos un bucle infinito si la imagen genérica también falla
+    // Previene bucles infinitos si la imagen genérica también falla
     const fallbackSrc = 'assets/icons/crypto/generic.svg';
 
     if (target.src !== fallbackSrc) {
@@ -192,7 +190,7 @@ export class MarketService {
     }
   }
 
-  // 📡 API REST methods
+  // API REST methods
 
   /** Obtiene el precio de todas las criptomonedas */
   getAllPrice() {
