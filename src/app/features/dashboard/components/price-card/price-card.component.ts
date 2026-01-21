@@ -14,13 +14,13 @@ import { MarketService } from '../../service/market.service';
 export class PriceCardComponent {
   private marketService = inject(MarketService);
 
-  // ✅ Signal Input: Ultra eficiente y tipado
+  // Signal Input: Ultra eficiente y tipado
   asset = input.required<CryptoAsset>();
 
-  // ✅ Computed Signal: Lógica derivada para el color
+  // Computed Signal: Lógica derivada para el color
   isPositive = computed(() => this.asset().change24h >= 0);
 
-  // ✅ Método para manejo de errores de imagen
+  // Método para manejo de errores de imagen
   onImageError(event: Event): void {
     this.marketService.handleImageError(event);
   }

@@ -15,7 +15,7 @@ import { LucideAngularModule } from 'lucide-angular';
 })
 export class SidebarComponent {
 
-  // ✅ Usamos un Signal para los ítems del menú.
+  // Usamos un Signal para los ítems del menú.
   // En versiones legacy usarías un array simple o un Observable.
   readonly menuItems = signal<MenuItem[]>([
     { label: 'Dashboard', icon: 'lucide-layout-grid', route: '/dashboard' },
