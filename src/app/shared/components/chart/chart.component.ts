@@ -1,7 +1,7 @@
-import { Component, inject, input } from '@angular/core';
-import { NgApexchartsModule } from 'ng-apexcharts';
-import { ChartDataService } from '../../service/chart-data.service';
 import { CommonModule } from '@angular/common';
+import { Component, inject, input } from '@angular/core';
+import { ChartDataService } from '@app/features/dashboard/service/chart-data.service';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @Component({
   selector: 'app-chart',

@@ -114,7 +114,9 @@
 
               <!-- Price -->
               <td class="py-4 px-4 text-right">
-                <div class="text-sm font-bold text-white">{{ asset.price | currency }}</div>
+                <div class="text-sm font-bold text-white">
+                  {{ asset.price | currency : currencyCode() : 'symbol' : '1.2-2' }}
+                </div>
               </td>
 
               <!-- 24h Change -->
@@ -165,12 +167,25 @@
 
               <!-- Action -->
               <td class="py-4 px-4 text-center">
-                <button
-                  (click)="onTrade(asset)"
-                  class="bg-crypto-neon hover:bg-crypto-neon/90 text-crypto-dark font-semibold px-6 py-2 rounded-lg text-sm transition-all hover:shadow-lg hover:shadow-crypto-neon/50 focus:outline-none focus:ring-2 focus:ring-crypto-neon focus:ring-offset-2 focus:ring-offset-crypto-dark"
-                >
-                  Trade
-                </button>
+                <div class="flex items-center justify-center gap-3">
+                  <button
+                    type="button"
+                    (click)="toggleWatchlist(asset)"
+                    class="p-2 rounded-lg border border-slate-800 bg-slate-900/80 hover:border-crypto-neon/50 hover:text-crypto-neon transition-all"
+                    [class.text-crypto-neon]="isInWatchlist(asset)"
+                    [attr.aria-pressed]="isInWatchlist(asset)"
+                    aria-label="Toggle watchlist"
+                  >
+                    <lucide-icon [name]="isInWatchlist(asset) ? 'heart' : 'heart-off'" class="w-4 h-4"></lucide-icon>
+                  </button>
+
+                  <button
+                    (click)="onTrade(asset)"
+                    class="bg-crypto-neon hover:bg-crypto-neon/90 text-crypto-dark font-semibold px-6 py-2 rounded-lg text-sm transition-all hover:shadow-lg hover:shadow-crypto-neon/50 focus:outline-none focus:ring-2 focus:ring-crypto-neon focus:ring-offset-2 focus:ring-offset-crypto-dark"
+                  >
+                    Trade
+                  </button>
+                </div>
               </td>
             </tr>
           }

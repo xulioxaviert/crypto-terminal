@@ -1,9 +1,9 @@
 // features/dashboard/dashboard.component.ts
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { MarketTrendsComponent } from '@app/shared/components/market-trends/market-trends.component';
+import { PriceCardComponent } from '@app/shared/components/price-card/price-card.component';
 import { LucideAngularModule } from 'lucide-angular';
-import { PriceCardComponent } from '../../shared/components/price-card/price-card.component';
-import { MarketTrendsComponent } from "./components/market-trends/market-trends.component";
 import { MarketService } from './service/market.service';
 
 @Component({

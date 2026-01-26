@@ -1,10 +1,10 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
+import { CryptoAsset } from '@app/features/dashboard/models/crypto.model';
+import { MarketService } from '@app/features/dashboard/service/market.service';
+import { ChartComponent } from '@app/shared/components/chart/chart.component';
+import { handleCryptoImageError } from '@app/shared/utils/image-fallback';
 import { LucideAngularModule } from 'lucide-angular';
-import { ChartComponent } from '../../../../shared/components/chart/chart.component';
-import { handleCryptoImageError } from '../../../../shared/utils/image-fallback';
-import { CryptoAsset } from '../../models/crypto.model';
-import { MarketService } from '../../service/market.service';
 
 @Component({
   selector: 'app-market-trends',

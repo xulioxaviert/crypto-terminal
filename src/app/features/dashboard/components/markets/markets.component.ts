@@ -1,10 +1,11 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { AppStore } from '@app/core/store/app.store.service';
+import { ChartComponent } from '@app/shared/components/chart/chart.component';
+import { formatLargeNumber } from '@app/shared/utils/currency-formatter';
+import { handleCryptoImageError } from '@app/shared/utils/image-fallback';
 import { LucideAngularModule } from 'lucide-angular';
-import { ChartComponent } from '../../../../shared/components/chart/chart.component';
-import { formatLargeNumber } from '../../../../shared/utils/currency-formatter';
-import { handleCryptoImageError } from '../../../../shared/utils/image-fallback';
 import { CryptoAsset } from '../../models/crypto.model';
 import { MarketsTableStore } from './markets-table.service';
 
@@ -17,11 +18,13 @@ import { MarketsTableStore } from './markets-table.service';
 })
 export class MarketsComponent {
   private readonly tableStore = inject(MarketsTableStore);
+  private readonly appStore = inject(AppStore);
 
   // Signals públicos desde el store (solo lectura)
   assets = this.tableStore.paginatedAssets;
   state = this.tableStore.state;
   pagination = this.tableStore.paginationData;
+  currencyCode = computed(() => this.appStore.userPreferences().currency);
 
   // Helpers puros importados
   formatLargeNumber = formatLargeNumber;
@@ -57,5 +60,13 @@ export class MarketsComponent {
   onTrade(asset: CryptoAsset): void {
     console.log('Trading', asset.symbol);
     // TODO: Implementar navegación o modal de trade
+  }
+
+  toggleWatchlist(asset: CryptoAsset): void {
+    this.appStore.toggleWatchlist(asset.symbol);
+  }
+
+  isInWatchlist(asset: CryptoAsset): boolean {
+    return this.appStore.isInWatchlistSnapshot(asset.symbol);
   }
 }

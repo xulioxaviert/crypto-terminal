@@ -12,7 +12,7 @@ export const routes: Routes = [
   },
   {
     path: 'portfolio',
-    loadComponent: () => import('./features/dashboard/components/portfolio-hero/portfolio-hero.component').then(m => m.PortfolioHeroComponent),
+    loadComponent: () => import('./shared/components/portfolio-hero/portfolio-hero.component').then(m => m.PortfolioHeroComponent),
   },
   {
     path: 'markets',
@@ -24,7 +24,7 @@ export const routes: Routes = [
   },
   {
     path: 'wallets',
-    loadComponent: () => import('./features/dashboard/components/wallets/wallets-component').then(m => m.WalletsComponent),
+    loadComponent: () => import('./shared/components/wallets/wallets-component').then(m => m.WalletsComponent),
   },
   {
     path: '**',

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of, retry, throttleTime } from 'rxjs';
+import { environment } from '@environments/environment';
+import { catchError, map, Observable, of, retryWhen, tap, throttleTime, timer } from 'rxjs';
 import { webSocket } from 'rxjs/webSocket';
 import { BinanceTickerData } from '../../features/dashboard/models/binance.model';
 import { ENDPOINTS } from '../config/endpoints.config';
@@ -29,6 +30,11 @@ import { IMarketDataProvider, PriceUpdate } from '../interfaces/market-data-prov
   providedIn: 'root',
 })
 export class BinanceMarketAdapter implements IMarketDataProvider {
+  /**
+   * Reconnection configuration from environment
+   */
+  private readonly RECONNECT_CONFIG = environment.websocket.reconnect;
+  private reconnectAttempts = 0;
   /**
    * Assets tracked by Binance WebSocket
    */
@@ -70,22 +76,68 @@ export class BinanceMarketAdapter implements IMarketDataProvider {
    * Connect to Binance WebSocket and stream price updates
    *
    * Stream features:
-   * - Throttled to 100ms (10 updates/second max)
-   * - Auto-reconnect on disconnect (3s delay)
+   * - Throttled to configured rate (default 100ms)
+   * - Auto-reconnect with exponential backoff
    * - Error handling with fallback to null
+   *
+   * Exponential backoff strategy:
+   * - Attempt 1: 1s delay
+   * - Attempt 2: 2s delay
+   * - Attempt 3: 4s delay
+   * - Attempt 4: 8s delay
+   * - Attempt 5: 16s delay (capped at maxDelay)
    *
    * @returns Observable of PriceUpdate or null on error
    */
   connect(): Observable<PriceUpdate | null> {
     return webSocket<BinanceTickerData>(this.WS_URL).pipe(
-      throttleTime(100), // Prevent UI overload
+      throttleTime(environment.websocket.throttle),
       map((data) => this.transformBinanceData(data)),
-      retry({ delay: 3000 }), // Reconnect after 3s
+      tap(() => {
+        // Reset reconnection counter on successful message
+        this.reconnectAttempts = 0;
+      }),
+      retryWhen((errors) =>
+        errors.pipe(
+          tap(() => {
+            this.reconnectAttempts++;
+            if (this.reconnectAttempts > this.RECONNECT_CONFIG.maxAttempts) {
+              console.error(
+                `[BinanceAdapter] Max reconnection attempts (${this.RECONNECT_CONFIG.maxAttempts}) reached. Stopping.`
+              );
+              throw new Error('Max reconnection attempts exceeded');
+            }
+
+            const delay = this.calculateBackoffDelay();
+            console.warn(
+              `[BinanceAdapter] Reconnecting... (attempt ${this.reconnectAttempts}/${this.RECONNECT_CONFIG.maxAttempts}) in ${delay}ms`
+            );
+          }),
+          // Delay with exponential backoff
+          map(() => timer(this.calculateBackoffDelay()))
+        )
+      ),
       catchError((error) => {
-        console.error('[BinanceAdapter] WebSocket error:', error);
+        console.error('[BinanceAdapter] Fatal WebSocket error:', error);
+        // Reset counter for future reconnection attempts
+        this.reconnectAttempts = 0;
         return of(null);
       })
     );
+  }
+
+  /**
+   * Calculate exponential backoff delay
+   *
+   * Formula: min(baseDelay * 2^attempts, maxDelay)
+   *
+   * @returns Delay in milliseconds
+   */
+  private calculateBackoffDelay(): number {
+    const exponentialDelay =
+      this.RECONNECT_CONFIG.baseDelay * Math.pow(2, this.reconnectAttempts - 1);
+
+    return Math.min(exponentialDelay, this.RECONNECT_CONFIG.maxDelay);
   }
 
   /**
