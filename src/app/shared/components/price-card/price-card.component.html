@@ -1,5 +1,5 @@
 <div
-  class="bg-crypto-surface border border-slate-800/50 p-4 rounded-3xl hover:border-crypto-neon/30 transition-all group"
+  class="relative bg-crypto-surface border border-slate-800/50 p-4 rounded-3xl hover:border-crypto-neon/30 transition-all group"
 >
   <div class="flex items-start gap-2 mb-4">
     <div
@@ -12,7 +12,7 @@
       height="32"
       priority
       class="object-contain"
-      (error)="onImageError($event)"
+      (error)="handleImageError($event)"
     >
     </div>
     <div>
@@ -23,7 +23,7 @@
 
   <div class="mb-2">
     <span class="text-4xl font-bold text-white tracking-tight">
-      {{ asset().price | currency : 'USD' : 'symbol' : '1.2-2' }}
+      {{ asset().price | currency : currencyCode() : 'symbol' : '1.2-2' }}
     </span>
   </div>
 
@@ -59,4 +59,15 @@
       </div>
     </div>
   </div>
+
+  <button
+    type="button"
+    (click)="toggleWatchlist()"
+    class="absolute top-4 right-4 p-2 rounded-full border border-slate-800 bg-slate-900/80 hover:border-crypto-neon/50 hover:text-crypto-neon transition-all"
+    [class.text-crypto-neon]="inWatchlist()"
+    [attr.aria-pressed]="inWatchlist()"
+    aria-label="Toggle watchlist"
+  >
+    <lucide-icon [name]="inWatchlist() ? 'heart' : 'heart-off'" size="18"></lucide-icon>
+  </button>
 </div>

@@ -1,0 +1,24 @@
+// Animaciones para hover en filas
+tr {
+  transition: background-color 150ms ease-in-out;
+}
+
+// Animación sutil para botón Trade
+button[class*="bg-crypto-neon"] {
+  transition: all 200ms ease-in-out;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+}
+
+// Efecto glow en foco para accesibilidad
+input:focus,
+button:focus,
+select:focus {
+  outline: none;
+}

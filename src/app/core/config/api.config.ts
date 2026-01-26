@@ -1,8 +1,15 @@
-//Url de las APIs utilizadas en la aplicación base
+import { environment } from '@environments/environment';
+
+/**
+ * API Configuration
+ *
+ * Centralizes all external API configurations.
+ * Uses environment variables for flexible deployment.
+ *
+ * @see src/environments/environment.ts
+ */
 export const API_CONFIG = {
-  binance: {
-    baseUrl: 'https://data-api.binance.vision/api/v3',
-    testnetUrl: 'https://testnet.binance.vision',
-    wsUrl: 'wss://stream.binance.com:9443',
-  },
-};
+  binance: environment.binance,
+  icons: environment.icons,
+  websocket: environment.websocket,
+} as const;
