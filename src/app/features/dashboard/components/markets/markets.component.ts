@@ -5,8 +5,8 @@ import { LucideAngularModule } from 'lucide-angular';
 import { formatLargeNumber } from '../../../../shared/utils/currency-formatter';
 import { handleCryptoImageError } from '../../../../shared/utils/image-fallback';
 import { CryptoAsset } from '../../models/crypto.model';
-import { MarketService } from '../../service/market.service';
 import { ChartComponent } from '../chart/chart.component';
+import { MarketsTableStore } from './markets-table.store';
 
 @Component({
   selector: 'app-markets',
@@ -16,42 +16,42 @@ import { ChartComponent } from '../chart/chart.component';
   styleUrl: './markets.component.scss',
 })
 export class MarketsComponent {
-  protected marketService = inject(MarketService);
+  private readonly tableStore = inject(MarketsTableStore);
 
-  // Signals públicos desde el servicio (solo lectura)
-  assets = this.marketService.paginatedAssets;
-  state = this.marketService.marketsTableState;
-  pagination = this.marketService.paginationData;
+  // Signals públicos desde el store (solo lectura)
+  assets = this.tableStore.paginatedAssets;
+  state = this.tableStore.state;
+  pagination = this.tableStore.paginationData;
 
   // Helpers puros importados
   formatLargeNumber = formatLargeNumber;
   handleImageError = handleCryptoImageError;
 
-  // Métodos de presentación (delegan al servicio)
+  // Métodos de presentación (delegan al store)
   onSearchInput(term: string): void {
-    this.marketService.updateSearchTerm(term);
+    this.tableStore.updateSearchTerm(term);
   }
 
   onCategorySelect(category: string): void {
-    this.marketService.updateCategory(category);
+    this.tableStore.updateCategory(category);
   }
 
   onViewToggle(mode: 'list' | 'grid'): void {
-    this.marketService.updateViewMode(mode);
+    this.tableStore.updateViewMode(mode);
   }
 
   onPageClick(page: number | string): void {
     if (typeof page === 'number') {
-      this.marketService.goToPage(page);
+      this.tableStore.goToPage(page);
     }
   }
 
   onPreviousPage(): void {
-    this.marketService.previousPage();
+    this.tableStore.previousPage();
   }
 
   onNextPage(): void {
-    this.marketService.nextPage();
+    this.tableStore.nextPage();
   }
 
   onTrade(asset: CryptoAsset): void {
