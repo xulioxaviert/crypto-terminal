@@ -1,39 +1,55 @@
-# CryptoTerminal - AI Instructions & Coding Standards
+# ⚠️ ARCHIVOS MIGRADOS
 
-## 🚀 Project Context
-- **Framework:** Angular 20 (Zoneless, Signal-based).
-- **Architecture:** Domain-Driven Design (DDD) Lite.
-- **Styling:** Tailwind CSS + SCSS (Hybrid approach).
-- **State Management:** NgRx Signal Store & Local Signals.
+Este archivo ha sido **reemplazado** por un sistema de contexto más completo y organizado.
 
-## 🛠 Angular 20 Standards (Strict)
-1. **Zoneless:** Do not suggest `zone.js` or `ChangeDetectorRef`. Use Signals only.
-2. **Signals Everywhere:** - Use `input()`, `output()`, `model()` for component communication.
-   - Use `computed()` for derived state.
-   - Use `effect()` sparingly (prefer declarative flows).
-3. **Standalone:** Every component/pipe/directive must be `standalone: true`.
-4. **Control Flow:** Use `@if`, `@for`, `@switch`. Do not use `*ngIf` or `*ngFor`.
-5. **Dependency Injection:** Use the `inject()` function. Avoid constructor injection.
+## 📚 Lee estos archivos en orden:
 
-## 🏗 Architecture & Clean Code
-- **SOLID:** Strictly follow SOLID principles.
-- **Clean Code:** Use descriptive variable names (e.g., `isPriceIncreasing` instead of `up`).
-- **DRY:** Extract common UI logic into `shared/` components.
-- **Components:** Keep components under 200 lines. Use sub-components if logic grows.
+1. **[.vscode/ai/master-context.md](.vscode/ai/master-context.md)** ← Obligatorio PRIMERO
+   - Principios fundamentales
+   - Estándares de código (Angular 20 zoneless, signals)
+   - Arquitectura (core/features/shared)
+   - Accesibilidad, rendimiento, testing
+   - Tech stack exacto
+   - Seguridad y validación
 
-## 📝 Git & Workflow
-- **Branch Names:** Must follow the pattern `feature/APP-XX-titulo-en-español` for feature branches (XX = issue number).
-  - Format: `feature/APP-XX-titulo-corto-en-español`
-  - Example: `feature/APP-01-diseño-aplicacion`
-  - For bug fixes: `bugfix/APP-XX-descripcion`
-  - For refactoring: `refactor/APP-XX-descripcion`
-- **Commit Messages:** Must follow Conventional Commits (feat, fix, refactor, chore, docs) and MUST be in English.
-  - Example: `feat(dashboard): implement real-time websocket connection using signals`
-- **Issue Format:**
-  - Title: `APP-XX: [Área] Descripción corta` (where XX is the issue number) - **IN SPANISH**
-  - Description: Detailed explanation of what will be implemented in this issue, including Context, Tasks, and Acceptance Criteria - **IN SPANISH**
-  - Example Title: `APP-01: [Dashboard] Implementar gráfico de precios en tiempo real con websocket`
+2. **[.vscode/ai/rules.md](.vscode/ai/rules.md)** ← Referencia rápida
+   - Angular 20 (zoneless, signals)
+   - Arquitectura y organización
+   - Estilos y Tailwind
+   - Binance integration
+   - Testing (Vitest + TestBed)
+   - Performance guidelines
+   - Commits y ramas
+   - Nombres y convenciones
 
-## 🎨 UI & Styling (Tailwind)
-- Use custom tokens defined in `tailwind.config.js`: `crypto-dark`, `crypto-neon`, etc.
-- Prefer Tailwind utility classes. Use SCSS only for complex animations or neon glow effects.
+3. **[.vscode/ai/README.md](.vscode/ai/README.md)** ← Guía de uso
+   - Cómo usar el sistema de contexto
+   - Descripción de los 8 roles
+   - Ejemplos de uso
+   - Checklists para contribuidores
+
+4. **Elige tu rol en [.vscode/ai/agents/](.vscode/ai/agents/)**
+   - `architecture.md` - Arquitecto
+   - `senior-frontend.md` - Senior Frontend
+   - `ux-ui.md` - UX/UI + Accesibilidad
+   - `performance.md` - Experto en Rendimiento
+   - `test.md` - Testing
+   - `docs.md` - Documentación
+   - `devops.md` - DevOps / Infra
+   - `git-workflow.md` - Git/Workflow
+
+---
+
+## 🚀 Inicio rápido
+
+```bash
+# Para cualquier tarea, siempre:
+1. Lee master-context.md completamente
+2. Busca tu rol en .vscode/ai/agents/
+3. Lee el archivo de tu rol
+4. Aplica todas las reglas
+```
+
+---
+
+**✅ Todo el contenido de este archivo ha sido integrado en `.vscode/ai/master-context.md` sin duplicaciones.**
