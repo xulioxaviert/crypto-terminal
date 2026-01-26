@@ -1,10 +1,10 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { Component, inject, input, signal } from '@angular/core';
-import { MarketTrend } from '../../models/market-trend.model';
+import { Component, inject, input } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
-import { ChartComponent } from '../chart/chart.component';
-import { MarketService } from '../../service/market.service';
+import { handleCryptoImageError } from '../../../../shared/utils/image-fallback';
 import { CryptoAsset } from '../../models/crypto.model';
+import { MarketService } from '../../service/market.service';
+import { ChartComponent } from '../chart/chart.component';
 
 @Component({
   selector: 'app-market-trends',
@@ -16,9 +16,10 @@ import { CryptoAsset } from '../../models/crypto.model';
 export class MarketTrendsComponent {
   private market = inject(MarketService);
   asset = input.required<CryptoAsset>();
-  // trends se deriva de los assets del servicio
+
+  // Trends se deriva de los assets del servicio
   public trends = this.market.assets;
-  onImageError(event: Event): void {
-    this.market.handleImageError(event);
-  }
+
+  // Helper puro importado
+  handleImageError = handleCryptoImageError;
 }

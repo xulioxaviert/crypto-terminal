@@ -6,7 +6,7 @@ import { formatLargeNumber } from '../../../../shared/utils/currency-formatter';
 import { handleCryptoImageError } from '../../../../shared/utils/image-fallback';
 import { CryptoAsset } from '../../models/crypto.model';
 import { ChartComponent } from '../chart/chart.component';
-import { MarketsTableStore } from './markets-table.store';
+import { MarketsTableStore } from './markets-table.service';
 
 @Component({
   selector: 'app-markets',

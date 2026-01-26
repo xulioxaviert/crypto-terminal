@@ -1,9 +1,10 @@
-import { Component, computed, inject, input } from '@angular/core';
 import { CommonModule, CurrencyPipe, NgOptimizedImage } from '@angular/common';
-import { CryptoAsset } from '../../models/crypto.model';
+import { Component, computed, inject, input } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
-import { ChartComponent } from "../chart/chart.component";
+import { handleCryptoImageError } from '../../../../shared/utils/image-fallback';
+import { CryptoAsset } from '../../models/crypto.model';
 import { MarketService } from '../../service/market.service';
+import { ChartComponent } from "../chart/chart.component";
 
 @Component({
   selector: 'app-price-card',
@@ -20,8 +21,6 @@ export class PriceCardComponent {
   // Computed Signal: Lógica derivada para el color
   isPositive = computed(() => this.asset().change24h >= 0);
 
-  // Método para manejo de errores de imagen
-  onImageError(event: Event): void {
-    this.marketService.handleImageError(event);
-  }
+  // Helper puro importado
+  handleImageError = handleCryptoImageError;
 }
