@@ -16,7 +16,7 @@ export const routes: Routes = [
   },
   {
     path: 'markets',
-    loadComponent: () => import('./features/dashboard/components/markets/markets-component').then(m => m.MarketsComponent),
+    loadComponent: () => import('./features/dashboard/components/markets/markets.component').then(m => m.MarketsComponent),
   },
   {
     path: 'settings',
