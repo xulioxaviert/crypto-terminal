@@ -2,10 +2,10 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
+import { ChartComponent } from '../../../../shared/components/chart/chart.component';
 import { formatLargeNumber } from '../../../../shared/utils/currency-formatter';
 import { handleCryptoImageError } from '../../../../shared/utils/image-fallback';
 import { CryptoAsset } from '../../models/crypto.model';
-import { ChartComponent } from '../chart/chart.component';
 import { MarketsTableStore } from './markets-table.service';
 
 @Component({

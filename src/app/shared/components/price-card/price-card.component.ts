@@ -1,9 +1,9 @@
 import { CommonModule, CurrencyPipe, NgOptimizedImage } from '@angular/common';
 import { Component, computed, inject, input } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
-import { handleCryptoImageError } from '../../../../shared/utils/image-fallback';
-import { CryptoAsset } from '../../models/crypto.model';
-import { MarketService } from '../../service/market.service';
+import { CryptoAsset } from '../../../features/dashboard/models/crypto.model';
+import { MarketService } from '../../../features/dashboard/service/market.service';
+import { handleCryptoImageError } from '../../utils/image-fallback';
 import { ChartComponent } from "../chart/chart.component";
 
 @Component({

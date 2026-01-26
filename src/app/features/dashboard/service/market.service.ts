@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { catchError, forkJoin, map, of, retry, throttleTime } from 'rxjs';
-import { webSocket } from 'rxjs/webSocket';
+import { forkJoin } from 'rxjs';
+import { BinanceMarketAdapter } from '../../../core/adapters/binance-market.adapter';
 import { API_CONFIG } from '../../../core/config/api.config';
 import { ENDPOINTS } from '../../../core/config/endpoints.config';
-import { BinanceKline, BinanceTickerData, PriceUpdate } from '../models/binance.model';
+import { BinanceKline } from '../models/binance.model';
 import { CryptoAsset } from '../models/crypto.model';
 
 @Injectable({
@@ -16,26 +16,11 @@ export class MarketService {
   private readonly http = inject(HttpClient);
   private readonly ICON_BASE_URL = ENDPOINTS.ICON_BASE_URL;
 
-  // Configuración de assets a monitorear
-  private readonly TRACKED_ASSETS = [
-    'btcusdt', 'ethusdt', 'solusdt', 'dogeusdt', 'dotusdt', 'adausdt',
-    'xrpusdt', 'bnbusdt', 'maticusdt', 'ltcusdt'
-  ] as const;
-  private readonly WS_URL = `${ENDPOINTS.ws_url}/${this.TRACKED_ASSETS.map(s => `${s}@ticker`).join('/')}`;
-
-  // WebSocket stream con tipado y manejo de errores
-  private readonly marketStream$ = webSocket<BinanceTickerData>(this.WS_URL).pipe(
-    throttleTime(100),
-    map((data) => this.transformBinanceData(data)),
-    retry({ delay: 3000 }),
-    catchError((error) => {
-      console.error('WebSocket error:', error);
-      return of(null);
-    })
-  );
+  // Market data provider (Binance adapter)
+  private readonly marketDataProvider = inject(BinanceMarketAdapter);
 
   // Signal público del stream de precios en vivo
-  public readonly livePriceUpdate = toSignal(this.marketStream$);
+  public readonly livePriceUpdate = toSignal(this.marketDataProvider.connect());
 
   // Estado central: Map para búsquedas O(1)
   private readonly assetsMap = signal<Map<string, CryptoAsset>>(
@@ -100,10 +85,9 @@ export class MarketService {
 
   // Cargar datos históricos del sparkline desde Binance
   private loadSparklineData(): void {
-    const symbols = [
-      'BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'DOGEUSDT', 'DOTUSDT', 'ADAUSDT',
-      'XRPUSDT', 'BNBUSDT', 'MATICUSDT', 'LTCUSDT'
-    ];
+    // Usar los símbolos del adapter
+    const trackedAssets = this.marketDataProvider.getTrackedAssets();
+    const symbols = Array.from(trackedAssets).map(s => s.toUpperCase());
 
     // Crear requests para cada símbolo
     const requests = symbols.map(symbol =>
@@ -145,17 +129,8 @@ export class MarketService {
     });
   }
 
-  // Transformación de datos de Binance a formato interno
-  private transformBinanceData(data: BinanceTickerData): PriceUpdate {
-    return {
-      symbol: data.s.replace('USDT', ''),
-      price: parseFloat(data.c),
-      change: parseFloat(data.P)
-    };
-  }
-
   // Actualización inmutable del estado
-  private updateAssetPrice(update: PriceUpdate): void {
+  private updateAssetPrice(update: import('../../../core/interfaces/market-data-provider.interface').PriceUpdate): void {
     this.assetsMap.update(currentMap => {
       const asset = currentMap.get(update.symbol);
       if (!asset) return currentMap;

@@ -1,11 +1,10 @@
 // features/dashboard/dashboard.component.ts
-import { Component, inject } from '@angular/core';
-import { PriceCardComponent } from './components/price-card/price-card.component';
-import { MarketService } from './service/market.service';
-import { PortfolioHeroComponent } from "./components/portfolio-hero/portfolio-hero.component";
-import { MarketTrendsComponent } from "./components/market-trends/market-trends.component";
 import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
+import { PriceCardComponent } from '../../shared/components/price-card/price-card.component';
+import { MarketTrendsComponent } from "./components/market-trends/market-trends.component";
+import { MarketService } from './service/market.service';
 
 @Component({
   selector: 'app-dashboard',
