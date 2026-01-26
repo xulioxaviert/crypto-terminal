@@ -1,6 +1,6 @@
-import { Component, inject } from '@angular/core';
-import { PortfolioService } from '../../service/portfolio.service';
 import { CommonModule, CurrencyPipe } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { PortfolioService } from '@app/features/dashboard/service/portfolio.service';
 import { LucideAngularModule } from 'lucide-angular';
 
 @Component({

@@ -1,13 +1,44 @@
 import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AppStore } from '@app/core/store/app.store.service';
+import { describe, expect, it, vi } from 'vitest';
 import { CryptoAsset } from '../../models/crypto.model';
-import { MarketService } from '../../service/market.service';
+import { MarketsTableStore } from './markets-table.service';
 import { MarketsComponent } from './markets.component';
 
 describe('MarketsComponent', () => {
   let component: MarketsComponent;
   let fixture: ComponentFixture<MarketsComponent>;
-  let mockMarketService: jasmine.SpyObj<MarketService>;
+  let mockTableStore: {
+    paginatedAssets: ReturnType<typeof signal<CryptoAsset[]>>;
+    state: ReturnType<
+      typeof signal<{
+        searchTerm: string;
+        category: string;
+        viewMode: 'list' | 'grid';
+        isLoading?: boolean;
+      }>
+    >;
+    paginationData: ReturnType<
+      typeof signal<{
+        currentPage: number;
+        pageSize: number;
+        totalItems: number;
+        totalPages: number;
+      }>
+    >;
+    updateSearchTerm: ReturnType<typeof vi.fn>;
+    updateCategory: ReturnType<typeof vi.fn>;
+    updateViewMode: ReturnType<typeof vi.fn>;
+    goToPage: ReturnType<typeof vi.fn>;
+    previousPage: ReturnType<typeof vi.fn>;
+    nextPage: ReturnType<typeof vi.fn>;
+  };
+  let mockAppStore: {
+    userPreferences: ReturnType<typeof signal<{ currency: string }>>;
+    toggleWatchlist: ReturnType<typeof vi.fn>;
+    isInWatchlistSnapshot: ReturnType<typeof vi.fn>;
+  };
 
   const mockAssets: CryptoAsset[] = [
     {
@@ -18,7 +49,7 @@ describe('MarketsComponent', () => {
       change24h: 2.4,
       icon: '',
       iconUrl: 'https://example.com/btc.png',
-      sparkline: [100, 102, 101, 103, 105]
+      sparkline: [100, 102, 101, 103, 105],
     },
     {
       id: '2',
@@ -28,20 +59,45 @@ describe('MarketsComponent', () => {
       change24h: -0.8,
       icon: '',
       iconUrl: 'https://example.com/eth.png',
-      sparkline: [100, 99, 98, 97, 96]
-    }
+      sparkline: [100, 99, 98, 97, 96],
+    },
   ];
 
   beforeEach(async () => {
-    mockMarketService = jasmine.createSpyObj('MarketService', ['handleImageError'], {
-      assets: signal(mockAssets)
-    });
+    mockTableStore = {
+      paginatedAssets: signal(mockAssets),
+      state: signal({
+        searchTerm: '',
+        category: 'all',
+        viewMode: 'list' as const,
+        isLoading: false,
+      }),
+      paginationData: signal({
+        currentPage: 1,
+        pageSize: 10,
+        totalItems: mockAssets.length,
+        totalPages: 1,
+      }),
+      updateSearchTerm: vi.fn(),
+      updateCategory: vi.fn(),
+      updateViewMode: vi.fn(),
+      goToPage: vi.fn(),
+      previousPage: vi.fn(),
+      nextPage: vi.fn(),
+    };
+
+    mockAppStore = {
+      userPreferences: signal({ currency: 'USD' }),
+      toggleWatchlist: vi.fn(),
+      isInWatchlistSnapshot: vi.fn().mockReturnValue(false),
+    };
 
     await TestBed.configureTestingModule({
       imports: [MarketsComponent],
       providers: [
-        { provide: MarketService, useValue: mockMarketService }
-      ]
+        { provide: MarketsTableStore, useValue: mockTableStore },
+        { provide: AppStore, useValue: mockAppStore },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MarketsComponent);
@@ -53,43 +109,40 @@ describe('MarketsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display assets from service', () => {
-    expect(component.paginatedAssets().length).toBe(2);
+  it('should expose assets from store', () => {
+    expect(component.assets().length).toBe(2);
   });
 
-  it('should filter assets by search term', () => {
-    component.onSearchChange('bitcoin');
-    expect(component.filteredAssets().length).toBe(1);
-    expect(component.filteredAssets()[0].name).toBe('Bitcoin');
+  it('should delegate search input to store', () => {
+    component.onSearchInput('bitcoin');
+    expect(mockTableStore.updateSearchTerm).toHaveBeenCalledWith('bitcoin');
   });
 
-  it('should reset to first page when searching', () => {
-    component.currentPage.set(2);
-    component.onSearchChange('btc');
-    expect(component.currentPage()).toBe(1);
+  it('should delegate category selection', () => {
+    component.onCategorySelect('defi');
+    expect(mockTableStore.updateCategory).toHaveBeenCalledWith('defi');
   });
 
-  it('should navigate pages correctly', () => {
-    component.goToPage(2);
-    expect(component.currentPage()).toBe(2);
-
-    component.nextPage();
-    expect(component.currentPage()).toBe(3);
-
-    component.previousPage();
-    expect(component.currentPage()).toBe(2);
+  it('should delegate view toggle', () => {
+    component.onViewToggle('grid');
+    expect(mockTableStore.updateViewMode).toHaveBeenCalledWith('grid');
   });
 
-  it('should not exceed page boundaries', () => {
-    component.currentPage.set(1);
-    component.previousPage();
-    expect(component.currentPage()).toBe(1);
+  it('should delegate page click', () => {
+    component.onPageClick(2);
+    expect(mockTableStore.goToPage).toHaveBeenCalledWith(2);
   });
 
-  it('should toggle view mode', () => {
-    expect(component.viewMode()).toBe('list');
-    component.toggleView('grid');
-    expect(component.viewMode()).toBe('grid');
+  it('should delegate previous/next page', () => {
+    component.onPreviousPage();
+    component.onNextPage();
+    expect(mockTableStore.previousPage).toHaveBeenCalled();
+    expect(mockTableStore.nextPage).toHaveBeenCalled();
+  });
+
+  it('should toggle watchlist via AppStore', () => {
+    component.toggleWatchlist(mockAssets[0]);
+    expect(mockAppStore.toggleWatchlist).toHaveBeenCalledWith('BTC');
   });
 
   it('should format large numbers correctly', () => {
