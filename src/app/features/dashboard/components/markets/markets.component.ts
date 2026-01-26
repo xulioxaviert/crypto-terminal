@@ -2,6 +2,8 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
+import { formatLargeNumber } from '../../../../shared/utils/currency-formatter';
+import { handleCryptoImageError } from '../../../../shared/utils/image-fallback';
 import { CryptoAsset } from '../../models/crypto.model';
 import { MarketService } from '../../service/market.service';
 import { ChartComponent } from '../chart/chart.component';
@@ -20,6 +22,10 @@ export class MarketsComponent {
   assets = this.marketService.paginatedAssets;
   state = this.marketService.marketsTableState;
   pagination = this.marketService.paginationData;
+
+  // Helpers puros importados
+  formatLargeNumber = formatLargeNumber;
+  handleImageError = handleCryptoImageError;
 
   // Métodos de presentación (delegan al servicio)
   onSearchInput(term: string): void {
@@ -51,17 +57,5 @@ export class MarketsComponent {
   onTrade(asset: CryptoAsset): void {
     console.log('Trading', asset.symbol);
     // TODO: Implementar navegación o modal de trade
-  }
-
-  onImageError(event: Event): void {
-    this.marketService.handleImageError(event);
-  }
-
-  // Helper puro para formateo
-  formatLargeNumber(value: number): string {
-    if (value >= 1e12) return `$${(value / 1e12).toFixed(2)}T`;
-    if (value >= 1e9) return `$${(value / 1e9).toFixed(2)}B`;
-    if (value >= 1e6) return `$${(value / 1e6).toFixed(2)}M`;
-    return `$${value.toFixed(2)}`;
   }
 }

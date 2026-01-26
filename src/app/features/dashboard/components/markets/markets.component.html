@@ -102,7 +102,7 @@
                       height="24"
                       priority
                       class="object-contain"
-                      (error)="marketService.handleImageError($event)"
+                      (error)="handleImageError($event)"
                     />
                   </div>
                   <div class="min-w-0">
@@ -137,12 +137,12 @@
 
               <!-- Market Cap -->
               <td class="py-4 px-4 text-right">
-                <div class="text-sm text-gray-400">{{ marketService.formatLargeNumber(asset.price * 1000000000) }}</div>
+                <div class="text-sm text-gray-400">{{ formatLargeNumber(asset.price * 1000000000) }}</div>
               </td>
 
               <!-- Volume 24h -->
               <td class="py-4 px-4 text-right">
-                <div class="text-sm text-gray-400">{{ marketService.formatLargeNumber(asset.price * 100000000) }}</div>
+                <div class="text-sm text-gray-400">{{ formatLargeNumber(asset.price * 100000000) }}</div>
               </td>
 
               <!-- Last 7 Days Sparkline -->
@@ -166,7 +166,7 @@
               <!-- Action -->
               <td class="py-4 px-4 text-center">
                 <button
-                  (click)="marketService.tradeAsset(asset)"
+                  (click)="onTrade(asset)"
                   class="bg-crypto-neon hover:bg-crypto-neon/90 text-crypto-dark font-semibold px-6 py-2 rounded-lg text-sm transition-all hover:shadow-lg hover:shadow-crypto-neon/50 focus:outline-none focus:ring-2 focus:ring-crypto-neon focus:ring-offset-2 focus:ring-offset-crypto-dark"
                 >
                   Trade
