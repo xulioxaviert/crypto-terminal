@@ -688,3 +688,20 @@ Use this skill when:
 | Introduce Null Object                         | Eliminate null checks                 |
 | Replace Type Code with Class/Enum             | Strong typing                         |
 | Replace Inheritance with Delegation           | Composition over inheritance          |
+
+---
+
+## Examples
+
+See [EXAMPLES.md](./EXAMPLES.md) for detailed refactoring examples including:
+- Extract long methods into focused functions
+- Remove code duplication
+- Migrate legacy Angular to Angular 20 zoneless + signals
+- Replace nested conditionals with guard clauses
+- Strategy pattern for conditional logic
+- Replace magic numbers with constants
+- Extract classes from large objects
+- Introduce parameter objects
+- Replace primitive obsession with domain types
+- Null object pattern
+- And more...

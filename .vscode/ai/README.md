@@ -57,38 +57,90 @@ Cada rol tiene un archivo en `/agents/`:
 │   ├── docs.md                  ← Rol: Documentación
 │   ├── devops.md                ← Rol: DevOps / Infra
 │   └── git-workflow.md          ← Rol: Git/Workflow
+
+.github/skills/                  ← Skills con teoría + ejemplos prácticos
+├── accessibility/
+│   ├── SKILL.md                 ← Teoría: WCAG 2.2 AA/AAA
+│   └── EXAMPLES.md              ← Código: 9 ejemplos prácticos
+├── chrome-devtools/
+│   ├── SKILL.md                 ← Teoría: Browser automation
+│   └── EXAMPLES.md              ← Código: 10 ejemplos prácticos
+├── refactor/
+│   ├── SKILL.md                 ← Teoría: Refactoring patterns
+│   └── EXAMPLES.md              ← Código: 10 ejemplos prácticos
+└── senior-frontend/
+    ├── SKILL.md                 ← Teoría: Angular 20 patterns
+    └── EXAMPLES.md              ← Código: 11 ejemplos prácticos
 ```
 
 ---
 
 ## 💡 Ejemplos de uso
 
-### Ejemplo 1: Implementar un componente
-```
-Como **Senior Frontend**, implementa HeaderSearchComponent:
-- Búsqueda en tiempo real de criptos
-- Debounce 300ms
-- Accesibilidad WCAG AA
-- Tests unitarios
+### ⚠️ CRÍTICO: Crear TODO al inicio (Never lose context!)
+
+**SIEMPRE que empieces una tarea, crea un TODO** usando `manage_todo_list`:
+
+```markdown
+Tareas para [descripción de la tarea]:
+1. ✅ Leer master-context.md
+2. ⏳ Leer rules.md
+3. ⏳ Leer archivo del rol aplicable
+4. ⏳ Leer SKILL.md + EXAMPLES.md relevantes
+5. ⏳ Implementar [tarea específica]
+6. ⏳ Validar con checklist
+7. ⏳ Commit con mensaje convencional
 ```
 
-### Ejemplo 2: Revisar commits
-```
-Como **Git/Workflow**, valida estos commits:
-- "fixed dashboard"
-- "refactor: extract market service"
+**¿Por qué?** Mantiene el contexto visible y evita perder el hilo. Actualiza frecuentemente:
+- Marca como `in-progress` cuando inicies cada paso
+- Marca como `completed` cuando termines cada paso
 
-¿Cumplen con Conventional Commits?
+### Ejemplo 1: Senior Frontend - Implementar componente
+```
+TODO: Implementar HeaderSearchComponent
+
+1. ✅ Leer master-context.md
+2. ⏳ Leer senior-frontend/SKILL.md + EXAMPLES.md (#2 RxJS patterns)
+3. ⏳ Diseñar componente standalone con signals
+4. ⏳ Implementar RxJS debounce (300ms)
+5. ⏳ Agregar tests Vitest (>80% coverage)
+6. ⏳ Leer accessibility/EXAMPLES.md para validar WCAG AA
+7. ⏳ Commit: feat(header-search): add real-time crypto search
+
+Patrón usado: EXAMPLES.md #2 (Service with RxJS)
 ```
 
-### Ejemplo 3: Optimizar performance
+### Ejemplo 2: UX/UI + Accesibilidad - Auditar componente
 ```
-Como **Experto en rendimiento**, optimiza:
-- ApexCharts carga 10K velas (muy lento)
-- WebSocket sin throttling (100+ eventos/seg)
-- Header-search sin debounce
+TODO: Auditar accesibilidad de PriceCard
 
-Incluye métricas antes/después.
+1. ✅ Leer master-context.md (Accessibility section)
+2. ⏳ Leer accessibility/SKILL.md + EXAMPLES.md
+3. ⏳ Usar accessibility/EXAMPLES.md #6 (Price Card with live region)
+4. ⏳ Verificar contraste con Contrast Checker
+5. ⏳ Revisar keyboard navigation (Tab, Escape, Arrows)
+6. ⏳ Probar con NVDA o VoiceOver
+7. ⏳ Commit: fix(price-card): improve accessibility (AA → AAA)
+
+Patrón usado: EXAMPLES.md #6 (Accessible real-time updates)
+```
+
+### Ejemplo 3: Performance - Optimizar dashboard
+```
+TODO: Optimizar renderizado de market list
+
+1. ✅ Leer performance/SKILL.md
+2. ⏳ Leer refactor/SKILL.md + EXAMPLES.md
+3. ⏳ Leer senior-frontend/EXAMPLES.md (#6 Performance optimization)
+4. ⏳ Agregar track en @for loops (senior-frontend/EXAMPLES.md #3)
+5. ⏳ Implementar computed signals para derived state
+6. ⏳ Usar chrome-devtools/EXAMPLES.md #5 (Performance profiling)
+7. ⏳ Commit: perf: optimize market list rendering (-85% re-renders)
+
+Antes: 120ms re-render
+Después: 18ms re-render (7x faster)
+Patrón usado: senior-frontend/EXAMPLES.md #6
 ```
 
 ---
@@ -97,14 +149,17 @@ Incluye métricas antes/después.
 
 Antes de hacer **cualquier** cambio:
 
+- [ ] ¿Creé un TODO con los pasos? (CRÍTICO)
 - [ ] Leí **master-context.md**
 - [ ] Leí **rules.md**
 - [ ] Identifiqué el rol que aplica para mi tarea
 - [ ] Leí el archivo del rol en `/agents/`
-- [ ] Aplico todas las reglas (seguridad > correctitud > mantenibilidad)
+- [ ] Leí el `SKILL.md` + `EXAMPLES.md` relevantes en `.github/skills/`
+- [ ] ¿Aplico todas las reglas? (seguridad > correctitud > mantenibilidad)
 
 Antes de hacer **commit**:
 
+- [ ] ¿Actualicé el TODO a COMPLETED?
 - [ ] Lint pasa: `npm run lint`
 - [ ] Tests pasan: `npm run test`
 - [ ] TypeScript strict: sin `any`, sin errores
@@ -112,6 +167,64 @@ Antes de hacer **commit**:
 - [ ] Commit sigue Convencional Commits
 - [ ] Rama es `tipo/APP-XX-descripción`
 - [ ] Referencia issue en commit (Closes #APP-XX)
+
+---
+
+## � Cómo encontrar información rápido
+
+| Necesito... | Dónde encontrar |
+|------------|-----------------|
+| Crear TODO para no perder contexto | `README.md` - Sección "Crear TODO al inicio" |
+| Componente Angular 20 con signals | `senior-frontend/SKILL.md` + `EXAMPLES.md` #1 |
+| Patrones RxJS para Binance | `senior-frontend/SKILL.md` + `EXAMPLES.md` #2, #4 |
+| Refactorizar código | `refactor/SKILL.md` + `EXAMPLES.md` (10 ejemplos) |
+| Accesibilidad WCAG 2.2 AA/AAA | `accessibility/SKILL.md` + `EXAMPLES.md` (9 ejemplos) |
+| Chrome DevTools para debugging | `chrome-devtools/SKILL.md` + `EXAMPLES.md` #5, #7 |
+| Convenciones de commits | `rules.md` + `git-workflow.md` |
+| Estilos Tailwind tokens | `rules.md` + `senior-frontend/EXAMPLES.md` |
+| Testing con Vitest | `test.md` + `senior-frontend/EXAMPLES.md` #7 |
+
+---
+
+## 🎓 Principios clave (NUNCA olvides)
+
+1. **Master-context.md es la fuente de verdad**
+   - Siempre prioritario si hay conflicto
+   - Actualizado = todos los estándares
+
+2. **Rules.md es referencia rápida**
+   - Angular 20 (zoneless, signals)
+   - Patrones y mejores prácticas
+   - Convenciones de nombres
+
+3. **TODO es tu mejor amigo** ⭐ CRÍTICO
+   - Crea TODO al inicio de CUALQUIER tarea
+   - Mantén TODO visible mientras trabajas
+   - Actualiza estado frecuentemente
+   - Nunca pierdes contexto del trabajo actual
+
+4. **Skills tienen teoría + ejemplos prácticos**
+   - `SKILL.md` = principios, guías, referencias
+   - `EXAMPLES.md` = código copypaste listo, patrones
+   - Ejemplos están organizados por caso de uso
+
+5. **Prioridades de código**
+   - Seguridad > Correctitud > Mantenibilidad > Rendimiento > Estilo
+   - Accesibilidad desde el inicio (no retrofit)
+   - Tests desde el principio (no al final)
+
+---
+
+## 🚀 Primeros pasos
+
+1. Crea un TODO con los pasos que vas a seguir
+2. Lee [master-context.md](master-context.md) **completamente**
+3. Guarda [rules.md](rules.md) en favoritos
+4. Identifica tu rol principal en el proyecto
+5. Lee el archivo de tu rol en `/agents/`
+6. Busca el `SKILL.md` + `EXAMPLES.md` en `.github/skills/`
+7. Abre tu primer PR siguiendo todas las reglas
+8. Marca el TODO como COMPLETED cuando termines
 
 ---
 
@@ -136,19 +249,18 @@ Antes de hacer **commit**:
 **¿Necesito leer todos los archivos siempre?**
 → **SÍ**: master-context.md (obligatorio) + rules.md (referencia) + tu rol.
 
+**¿Necesito crear TODO para TODAS las tareas?**
+→ **SÍ, especialmente para tareas complejas**. El TODO:
+- Mantiene contexto visible
+- Evita perder el hilo
+- Facilita cambio de contexto
+- Mejora productividad
+
 **¿Qué pasa si no sigo las reglas?**
 → Los PRs serán rechazados. Lint y tests fallarán. Mejor seguirlas 😉
 
 ---
 
-## 🚀 Primeros pasos
+**Bienvenido a CryptoTerminal. Código limpio, estándares claros, contexto visible.** 🎉✨
 
-1. Lee [master-context.md](master-context.md) **ahora mismo**
-2. Guarda [rules.md](rules.md) en favoritos
-3. Identifica tu rol principal en el proyecto
-4. Lee el archivo de tu rol en `/agents/`
-5. Abre tu primer PR siguiendo todas las reglas
-
----
-
-**Bienvenido a CryptoTerminal. Código limpio, estándares claros, colaboración efectiva.** 🎉
+*Recuerda: TODO → contexto visible → nunca pierdes el hilo → mejor código.*

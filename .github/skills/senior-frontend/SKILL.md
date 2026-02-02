@@ -1103,6 +1103,22 @@ catchError(error => {
 - Add focus-visible styles
 - Test with keyboard navigation
 
+## Examples
+
+See [EXAMPLES.md](./EXAMPLES.md) for comprehensive practical examples including:
+- Complete component with signals and RxJS integration
+- Service with REST + WebSocket (Binance API)
+- New control flow templates (`@if`, `@for`, `@switch`)
+- Real-time updates with throttling
+- Accessible components (WCAG 2.2 AA)
+- Performance optimization (track, memoization)
+- Complete Vitest test suites
+- Service testing with HTTP mocks
+- Lazy loading routes
+- Proper commit message examples
+- TypeScript strict mode patterns
+- Common anti-patterns to avoid
+
 ## Additional Resources
 
 - [Angular 20 Official Docs](https://angular.dev)
