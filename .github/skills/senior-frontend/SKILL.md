@@ -1,17 +1,17 @@
 ---
 name: senior-frontend
-description: Expert guidance for implementing robust, accessible, and performant Angular 20 (zoneless, signals, standalone components) features in a crypto trading terminal. Use when implementing or refactoring Angular 20 components, services, or features with strict zoneless mode, signals-based state, RxJS reactive streams for Binance API integration, and WCAG 2.2 AA accessibility standards. Specialized in DDD lite architecture, Tailwind CSS styling, and Vitest testing.
+description: Expert guidance for implementing robust, accessible, and performant Angular project. Use when implementing or refactoring Angular components, services, or features with strict zoneless mode, signals-based state, RxJS reactive streams for Binance API integration, and WCAG 2.2 AA accessibility standards. Specialized in DDD lite architecture, Tailwind CSS styling, and Vitest testing.
 ---
 
-# Angular 20 Senior Frontend - Crypto Terminal
+# Angular Senior Frontend - Crypto Terminal
 
 ## Overview
 
-This skill provides comprehensive guidance for building production-grade Angular 20 features in a crypto trading terminal application. It enforces zoneless architecture with signals, standalone components, and strict best practices for real-time data integration with Binance API (REST + WebSocket).
+This skill provides comprehensive guidance for building production-grade Angular features in a crypto trading terminal application. It enforces zoneless architecture with signals, standalone components, and strict best practices for real-time data integration with Binance API (REST + WebSocket).
 
 ## Core Technologies
 
-- **Angular 20**: Zoneless mode, signals, standalone components
+- **Angular**: Zoneless mode, signals, standalone components
 - **State Management**: Local signals + computed values (no NgRx/traditional stores)
 - **Reactive Streams**: RxJS 7.8 with proper teardown patterns
 - **Styling**: Tailwind CSS 3.4.19 + SCSS for complex animations
@@ -23,7 +23,7 @@ This skill provides comprehensive guidance for building production-grade Angular
 ## When to Use This Skill
 
 Trigger this skill when:
-- Implementing Angular 20 components or features
+- Implementing Angular components or features
 - Integrating real-time crypto data (Binance API)
 - Refactoring legacy Angular code to zoneless/signals
 - Building accessible UI components (WCAG 2.2 AA)
@@ -31,7 +31,7 @@ Trigger this skill when:
 - Writing tests for Angular components/services
 - Optimizing performance in crypto data displays
 
-## Angular 20 Zoneless Architecture
+## Angular Zoneless Architecture
 
 ### Critical Rules (Never Break)
 
@@ -972,7 +972,7 @@ this.service.getData()
 ### Essential Imports
 
 ```typescript
-// Core Angular 20
+// Core Angular
 import { Component, signal, computed, inject, input, output, model } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
@@ -1121,7 +1121,7 @@ See [EXAMPLES.md](./EXAMPLES.md) for comprehensive practical examples including:
 
 ## Additional Resources
 
-- [Angular 20 Official Docs](https://angular.dev)
+- [Angular Official Docs](https://angular.dev)
 - [Signals Guide](https://angular.dev/guide/signals)
 - [RxJS Operators](https://rxjs.dev/api)
 - [Binance API Docs](https://binance-docs.github.io/apidocs/)

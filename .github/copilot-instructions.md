@@ -45,6 +45,7 @@ Este proyecto utiliza un **sistema organizado de contexto** para mantener cohere
 | Skill | Archivo de Referencia | Ejemplos Prácticos |
 |-------|----------------------|-------------------|
 | Accesibilidad WCAG 2.2 AA/AAA | `accessibility/SKILL.md` | `accessibility/EXAMPLES.md` |
+| **Testing de Accesibilidad** | `accessibility-testing/SKILL.md` | `accessibility-testing/EXAMPLES.md` |
 | Chrome DevTools MCP | `chrome-devtools/SKILL.md` | `chrome-devtools/EXAMPLES.md` |
 | Refactoring Angular | `refactor/SKILL.md` | `refactor/EXAMPLES.md` |
 | Senior Frontend Angular 20 | `senior-frontend/SKILL.md` | `senior-frontend/EXAMPLES.md` |
@@ -118,6 +119,9 @@ Antes de hacer commit:
 ├── accessibility/
 │   ├── SKILL.md              ← Teoría: WCAG 2.2 AA/AAA
 │   └── EXAMPLES.md           ← Código: 9 ejemplos prácticos
+├── accessibility-testing/
+│   ├── SKILL.md              ← Teoría: Testing de accesibilidad
+│   └── EXAMPLES.md           ← Código: 12 ejemplos prácticos
 ├── chrome-devtools/
 │   ├── SKILL.md              ← Teoría: Chrome DevTools MCP
 │   └── EXAMPLES.md           ← Código: 10 ejemplos prácticos
@@ -153,12 +157,15 @@ Antes de hacer commit:
 **TODO:** Auditar accesibilidad de PriceCard
 
 1. ✅ Leer accessibility/SKILL.md + EXAMPLES.md
-2. ⏳ Verificar contraste (4.5:1 mínimo)
-3. ⏳ Revisar keyboard navigation
-4. ⏳ Probar con NVDA/VoiceOver
-5. ⏳ Revisar ARIA attributes
-6. ⏳ Corregir violaciones
-7. ⏳ Commit: fix(price-card): improve accessibility (AA → AAA)
+2. ⏳ Leer accessibility-testing/SKILL.md + EXAMPLES.md
+3. ⏳ Activar herramientas MCP (Chrome DevTools)
+4. ⏳ Ejecutar tests automatizados (axe-core)
+5. ⏳ Verificar contraste (4.5:1 mínimo)
+6. ⏳ Revisar keyboard navigation
+7. ⏳ Probar con NVDA/VoiceOver
+8. ⏳ Revisar ARIA attributes
+9. ⏳ Corregir violaciones
+10. ⏳ Commit: fix(price-card): improve accessibility (AA → AAA)
 ```
 
 ### 🚀 Performance: Optimizar dashboard
@@ -185,6 +192,7 @@ Antes de hacer commit:
 | Patrones RxJS | `senior-frontend/SKILL.md` + `EXAMPLES.md` #2 |
 | Cómo refactorizar | `refactor/SKILL.md` + `EXAMPLES.md` |
 | Accesibilidad WCAG | `accessibility/SKILL.md` + `EXAMPLES.md` |
+| Testing de accesibilidad | `accessibility-testing/SKILL.md` + `EXAMPLES.md` |
 | Chrome DevTools | `chrome-devtools/SKILL.md` + `EXAMPLES.md` |
 | Convenciones de commits | `rules.md` + `git-workflow.md` |
 | Estilos Tailwind | `rules.md` + `senior-frontend/SKILL.md` |
@@ -257,4 +265,4 @@ npm run type-check    # TypeScript compile check
 ---
 
 *Última actualización: 2 de febrero de 2026*
-*Estructura: master-context + rules + agents + skills con ejemplos*
+|*Estructura: master-context + rules + agents + skills con ejemplos*
