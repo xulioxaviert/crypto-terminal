@@ -2,7 +2,7 @@
 name: accessibility-audit
 description: Audita y corrige accesibilidad WCAG 2.2 AA/AAA en interfaces Angular 20 de CryptoTerminal, con foco en teclado, lectores de pantalla, contraste, ARIA y pruebas.
 argument-hint: Describe la auditoria en este formato: pantalla/componente, alcance, criterio WCAG objetivo (AA o AAA), problemas observados y evidencia esperada.
-tools: ['vscode', 'read', 'search', 'edit', 'execute', 'web', 'todo']
+tools: [vscode, execute, read, agent, edit, search, web, browser, todo]
 ---
 
 <!-- Tip: Use /create-agent in chat to generate content with agent assistance -->

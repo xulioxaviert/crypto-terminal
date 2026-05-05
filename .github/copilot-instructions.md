@@ -2,11 +2,22 @@
 
 Este proyecto utiliza un **sistema organizado de contexto** para mantener coherencia y calidad en todo el desarrollo.
 
+<!-- MIGRATION NOTE -->
+> **Nota:** Este repositorio consolidó sus archivos de contexto bajo `.github/` (antes se usó `.vscode/ai/`). Usa `.github/CONTEXT_SYSTEM.md` como fuente única de verdad. Los agentes y skills están en `.github/agents/` y `.github/skills/` respectivamente.
+
+## Índice rápido
+
+- **Fuente de verdad:** [.github/CONTEXT_SYSTEM.md](.github/CONTEXT_SYSTEM.md)
+- **Skills (teoría + ejemplos):** [.github/skills/README.md](.github/skills/README.md)
+- **Agentes (roles):** [.github/agents/](.github/agents/)
+- **Listado de agentes (resumen):** [.github/AGENTS.md](.github/AGENTS.md)
+
+
 ---
 
 ## 📚 Guía de lectura (Orden obligatorio)
 
-### 1️⃣ **[../.vscode/ai/master-context.md](../.vscode/ai/master-context.md)** ← PRIMERO (Obligatorio)
+### 1️⃣ **[.github/CONTEXT_SYSTEM.md](.github/CONTEXT_SYSTEM.md)** ← PRIMERO (Obligatorio)
    - Principios fundamentales del proyecto
    - Estándares de código (Angular 20 zoneless, signals)
    - Arquitectura (core/features/shared)
@@ -14,7 +25,7 @@ Este proyecto utiliza un **sistema organizado de contexto** para mantener cohere
    - Tech stack exacto
    - Seguridad y validación
 
-### 2️⃣ **[../.vscode/ai/rules.md](../.vscode/ai/rules.md)** ← Referencia rápida
+### 2️⃣ **[.github/skills/README.md](.github/skills/README.md)** ← Referencia rápida
    - Angular 20 (zoneless, signals)
    - Arquitectura y organización
    - Estilos (Tailwind + SCSS)
@@ -24,13 +35,13 @@ Este proyecto utiliza un **sistema organizado de contexto** para mantener cohere
    - Commits y ramas
    - Nombres y convenciones
 
-### 3️⃣ **[../.vscode/ai/README.md](../.vscode/ai/README.md)** ← Introducción
+### 3️⃣ **[.github/skills/README.md](.github/skills/README.md)** ← Introducción
    - Cómo usar el sistema de contexto
    - Descripción de los 8 roles
    - Ejemplos de uso
    - Checklists para contribuidores
 
-### 4️⃣ **Elige tu rol en [../.vscode/ai/agents/](../.vscode/ai/agents/)**
+### 4️⃣ **Elige tu rol en [.github/agents/](.github/agents/)**
    - `architecture.md` - Arquitecto
    - `senior-frontend.md` - Senior Frontend
    - `ux-ui.md` - UX/UI + Accesibilidad
@@ -101,19 +112,10 @@ Antes de hacer commit:
 ## 📊 Estructura del proyecto
 
 ```
-.vscode/ai/                    ← Configuración Copilot + AI Agents
-├── master-context.md          ← ⭐ LEE PRIMERO
-├── rules.md                   ← Referencia rápida
-├── README.md                  ← Guía de uso
-└── agents/
-    ├── architecture.md
-    ├── senior-frontend.md
-    ├── ux-ui.md
-    ├── performance.md
-    ├── test.md
-    ├── docs.md
-    ├── devops.md
-    └── git-workflow.md
+.github/                       ← Sistema de contexto y skills
+├── CONTEXT_SYSTEM.md          ← ⭐ LEE PRIMERO (versión consolidada de master-context)
+├── agents/                    ← Agentes por rol (senior-frontend, accessibility, etc.)
+└── skills/                    ← SKILL.md + EXAMPLES.md por dominio
 
 .github/skills/                ← Skills con ejemplos (NUEVO)
 ├── accessibility/
@@ -129,140 +131,44 @@ Antes de hacer commit:
 │   ├── SKILL.md              ← Teoría: Refactoring patterns
 │   └── EXAMPLES.md           ← Código: 10 ejemplos prácticos
 └── senior-frontend/
-    ├── SKILL.md              ← Teoría: Angular 20 patterns
-    └── EXAMPLES.md           ← Código: 11 ejemplos prácticos
+   ├── SKILL.md              ← Teoría: Angular 20 patterns
+   └── EXAMPLES.md           ← Código: 11 ejemplos prácticos
 ```
 
 ---
 
 ## 🎯 Ejemplos de uso por rol
+# Sistema de Contexto - CryptoTerminal (resumen)
 
-### 👨‍💻 Senior Frontend: Implementar componente
+Este archivo es un resumen práctico. La fuente de verdad y la documentación completa está en [.github/CONTEXT_SYSTEM.md](.github/CONTEXT_SYSTEM.md).
 
-```markdown
-**TODO:** Implementar HeaderSearchComponent
+<!-- MIGRATION NOTE -->
+> **Nota:** la estructura de contexto se consolidó bajo `.github/` (antes se usó `.vscode/ai/`). Usa `.github/CONTEXT_SYSTEM.md` como referencia principal.
 
-1. ✅ Leer master-context.md
-2. ⏳ Leer senior-frontend/SKILL.md + EXAMPLES.md
-3. ⏳ Diseñar componente standalone con signals
-4. ⏳ Implementar RxJS debounce (300ms)
-5. ⏳ Agregar tests Vitest (>80% coverage)
-6. ⏳ Validar accesibilidad (WCAG 2.2 AA)
-7. ⏳ Commit: feat(header-search): add real-time crypto search
-```
+Índice rápido:
 
-### 🎨 UX/UI + Accesibilidad: Auditar componente
+- Fuente de verdad: [.github/CONTEXT_SYSTEM.md](.github/CONTEXT_SYSTEM.md)
+- Agentes (roles): [.github/agents/](.github/agents/)
+- Resumen de agentes: [.github/AGENTS.md](.github/AGENTS.md)
+- Skills (teoría + ejemplos): [.github/skills/README.md](.github/skills/README.md)
 
-```markdown
-**TODO:** Auditar accesibilidad de PriceCard
+Flujo mínimo para empezar:
 
-1. ✅ Leer accessibility/SKILL.md + EXAMPLES.md
-2. ⏳ Leer accessibility-testing/SKILL.md + EXAMPLES.md
-3. ⏳ Activar herramientas MCP (Chrome DevTools)
-4. ⏳ Ejecutar tests automatizados (axe-core)
-5. ⏳ Verificar contraste (4.5:1 mínimo)
-6. ⏳ Revisar keyboard navigation
-7. ⏳ Probar con NVDA/VoiceOver
-8. ⏳ Revisar ARIA attributes
-9. ⏳ Corregir violaciones
-10. ⏳ Commit: fix(price-card): improve accessibility (AA → AAA)
-```
+1. Crea un TODO para la tarea con `manage_todo_list`.
+2. Lee `.github/CONTEXT_SYSTEM.md` (fuente de verdad).
+3. Identifica el agente/rol adecuado en `.github/agents/`.
+4. Usa el `SKILL.md` y `EXAMPLES.md` relevantes en `.github/skills/`.
+5. Implementa cambios pequeños y validables; ejecuta `npm run lint` y `npm run test` en la zona tocada.
 
-### 🚀 Performance: Optimizar dashboard
-
-```markdown
-**TODO:** Optimizar renderizado de market list
-
-1. ✅ Leer performance/SKILL.md
-2. ⏳ Agregar track en @for loops
-3. ⏳ Implementar computed signals
-4. ⏳ Throttle WebSocket updates (200ms)
-5. ⏳ Perfil con Chrome DevTools
-6. ⏳ Validar Core Web Vitals
-7. ⏳ Commit: perf: optimize market list rendering (-85% re-renders)
-```
-
----
-
-## 🔍 Cómo encontrar información rápido
-
-| Necesito... | Dónde encontrar |
-|------------|-----------------|
-| Estructura de componente | `senior-frontend/SKILL.md` + `EXAMPLES.md` #1 |
-| Patrones RxJS | `senior-frontend/SKILL.md` + `EXAMPLES.md` #2 |
-| Cómo refactorizar | `refactor/SKILL.md` + `EXAMPLES.md` |
-| Accesibilidad WCAG | `accessibility/SKILL.md` + `EXAMPLES.md` |
-| Testing de accesibilidad | `accessibility-testing/SKILL.md` + `EXAMPLES.md` |
-| Chrome DevTools | `chrome-devtools/SKILL.md` + `EXAMPLES.md` |
-| Convenciones de commits | `rules.md` + `git-workflow.md` |
-| Estilos Tailwind | `rules.md` + `senior-frontend/SKILL.md` |
-| Testing Vitest | `test.md` + `senior-frontend/EXAMPLES.md` #7 |
-
----
-
-## 📋 Checklist: Antes de cualquier tarea
-
-```markdown
-□ ¿Creé un TODO con los pasos?
-□ ¿Leí master-context.md completamente?
-□ ¿Leí rules.md?
-□ ¿Leí el archivo de mi rol en agents/?
-□ ¿Leí el SKILL.md + EXAMPLES.md relevantes?
-□ ¿Entiendo los estándares de código?
-□ ¿Sé qué patrón usar?
-□ ¿Actualizo el TODO a medida que avanzo?
-```
-
----
-
-## ⚡ Comandos rápidos
+Comandos rápidos:
 
 ```bash
-# Desarrollo
-npm start              # Dev server (zoneless)
-npm run build          # Production build
-npm run lint           # ESLint + Prettier check
-npm run test           # Tests con Vitest
-npm run test:watch    # Watch mode
-
-# Validación pre-commit
-npm run lint:fix      # Auto-fix issues
-npm run type-check    # TypeScript compile check
+npm start
+npm run lint
+npm run test
 ```
 
----
+Si necesitas la versión extendida de esta guía (checklists, ejemplos y flujos por rol), consulta [.github/CONTEXT_SYSTEM.md](.github/CONTEXT_SYSTEM.md).
 
-## 🎓 Principios clave (NUNCA olvides)
+Última actualización: 24 de marzo de 2026
 
-1. **Master-context.md es la fuente de verdad**
-   - Siempre prioritario si hay conflicto
-   - Actualizado = todos los estándares
-
-2. **Rules.md es referencia rápida**
-   - Angular 20 (zoneless, signals)
-   - Patrones y mejores prácticas
-   - Convenciones de nombres
-
-3. **TODO es tu mejor amigo**
-   - Mantén TODO visible mientras trabajas
-   - Actualiza estado frecuentemente
-   - Nunca pierdes contexto
-
-4. **Skills tienen teoría + práctica**
-   - SKILL.md = principios y guías
-   - EXAMPLES.md = código copypaste listo
-   - Ejemplos están organizados por caso de uso
-
-5. **Prioridades**
-   - Seguridad > Correctitud > Mantenibilidad > Rendimiento > Estilo
-   - Accesibilidad desde el inicio (no retrofit)
-   - Tests desde el principio (no al final)
-
----
-
-**✅ Listo para contribuir. Recuerda: Lee el contexto, crea un TODO, actualiza frecuentemente, code con confianza.** 🚀
-
----
-
-*Última actualización: 2 de febrero de 2026*
-|*Estructura: master-context + rules + agents + skills con ejemplos*

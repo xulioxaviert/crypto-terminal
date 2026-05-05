@@ -4,8 +4,8 @@
 
 Este proyecto cuenta con un **sistema de contexto completo y estructurado** para mantener coherencia, calidad y enfoque en todo el desarrollo. Consta de:
 
-1. **Documentación base** (.vscode/ai/)
-2. **Roles especializados** (.vscode/ai/agents/)
+1. **Documentación base** (.github/)
+2. **Roles especializados** (.github/agents/)
 3. **Skills con teoría + ejemplos** (.github/skills/)
 4. **Sistema de TODO para mantener contexto**
 
@@ -15,7 +15,7 @@ Este proyecto cuenta con un **sistema de contexto completo y estructurado** para
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│ master-context.md (FUENTE DE VERDAD)               │
+│ .github/CONTEXT_SYSTEM.md (FUENTE DE VERDAD)       │
 │ - Principios fundamentales                          │
 │ - Estándares obligatorios                           │
 │ - Tech stack exacto                                 │
@@ -40,20 +40,20 @@ Este proyecto cuenta con un **sistema de contexto completo y estructurado** para
 
 ## 📂 Estructura de archivos
 
-### Base (`.vscode/ai/`)
+### Base (`.github/`)
 ```
-master-context.md          ← LEER PRIMERO (obligatorio)
-rules.md                   ← Referencia rápida
-README.md                  ← Guía de uso + TODO checklist
+.github/CONTEXT_SYSTEM.md   ← LEER PRIMERO (obligatorio)
+.github/AGENTS.md          ← Resumen de agentes
+.github/skills/README.md   ← Referencia rápida + índice de skills
 agents/
-  ├── architecture.md      ← Arquitecto
-  ├── senior-frontend.md   ← Senior Frontend
-  ├── ux-ui.md            ← UX/UI + Accesibilidad
-  ├── performance.md      ← Experto en Rendimiento
-  ├── test.md             ← Testing
-  ├── docs.md             ← Documentación
-  ├── devops.md           ← DevOps / Infra
-  └── git-workflow.md     ← Git/Workflow
+   ├── architecture.md      ← Arquitecto
+   ├── senior-frontend.md   ← Senior Frontend
+   ├── ux-ui.md             ← UX/UI + Accesibilidad
+   ├── performance.md       ← Experto en Rendimiento
+   ├── test.md              ← Testing
+   ├── docs.md              ← Documentación
+   ├── devops.md            ← DevOps / Infra
+   └── git-workflow.md      ← Git/Workflow
 ```
 
 ### Skills (`.github/skills/`)
@@ -77,48 +77,9 @@ senior-frontend/
 
 ---
 
-## 🎯 Flujo de trabajo obligatorio
+## 🎯 Flujo de trabajo (resumen)
 
-```
-START
-  ↓
-1️⃣ CREAR TODO
-   "Tareas para [descripción]"
-   └─ Paso 1: Leer master-context.md ✅
-   └─ Paso 2: Leer rules.md ⏳
-   └─ Paso 3: Leer archivo del rol ⏳
-   └─ Paso 4: Leer SKILL.md + EXAMPLES.md ⏳
-   └─ Paso 5: Implementar [tarea] ⏳
-   └─ Paso 6: Validar ⏳
-   └─ Paso 7: Commit ⏳
-  ↓
-2️⃣ LEER CONTEXTO
-   master-context.md (20-30 min)
-   ↓
-3️⃣ IDENTIFICAR ROL
-   ¿Qué rol aplica? (architecture, senior-frontend, ux-ui, etc)
-   ↓
-4️⃣ LEER SKILL + EJEMPLOS
-   SKILL.md (teoría) + EXAMPLES.md (código)
-   ↓
-5️⃣ IMPLEMENTAR
-   Mantén TODO actualizado:
-   - in-progress: al iniciar cada paso
-   - completed: al terminar cada paso
-   ↓
-6️⃣ VALIDAR
-   - Lint pasa
-   - Tests pasan
-   - TypeScript strict
-   - Accesibilidad OK
-   ↓
-7️⃣ COMMIT
-   Conventional Commits + referencia issue
-   ↓
-8️⃣ TODO → COMPLETED
-   Marca TODO como completed
-END
-```
+El flujo de trabajo completo y detallado se mantiene como referencia en [.github/copilot-instructions.md](.github/copilot-instructions.md). Usa ese archivo para pasos rápidos y `.github/CONTEXT_SYSTEM.md` como la fuente de verdad para políticas y estándares.
 
 ---
 
@@ -167,49 +128,9 @@ END
 
 ---
 
-## 📋 TODO - El elemento crítico
+## 📋 TODO (resumen)
 
-### Por qué TODO es CRÍTICO
-- ✅ Mantiene contexto visible
-- ✅ Evita perder el hilo
-- ✅ Facilita cambio de contexto
-- ✅ Documen ta progreso
-- ✅ Mejora productividad
-
-### Estructura de TODO
-```markdown
-TODO: [Descripción clara de la tarea]
-
-1. ✅ Leer master-context.md
-2. ⏳ Leer rules.md
-3. ⏳ Leer [rol-específico]/SKILL.md
-4. ⏳ Leer [rol-específico]/EXAMPLES.md
-5. ⏳ Implementar [parte específica 1]
-6. ⏳ Implementar [parte específica 2]
-7. ⏳ Validar con checklist
-8. ⏳ Commit: [mensaje-convencional]
-
-Patrón usado: [EXAMPLES.md #N - descripción]
-Bloqueantes: [Ninguno]
-Notas: [Contexto adicional]
-```
-
-### Estados del TODO
-- `✅` = completed (hecho, no vuelvo a esto)
-- `⏳` = not-started (aún no toco)
-- `⏳` → `✅` = marcar cuando termines cada paso
-
-**NUNCA hagas:**
-- ❌ Todos los pasos completed al final
-- ❌ Actualizar TODO cada hora
-- ❌ Crear TODO si la tarea toma <5 min
-
-**SÍ haz:**
-- ✅ Crear TODO para tareas >5 minutos
-- ✅ Actualizar estado mientras trabajas
-- ✅ Marcar como completed cuando termines CADA PASO
-- ✅ Consultar TODO cuando retomas trabajo
-
+El sistema de TODO y las pautas de uso se documentan en [.github/copilot-instructions.md](.github/copilot-instructions.md). Consulta ese archivo para plantillas, ejemplos y la checklist rápida.
 ---
 
 ## 🔄 Flujo de búsqueda de información
@@ -235,23 +156,9 @@ RESULTADO: ✅ Componente accesible implementado
 
 ---
 
-## ✅ Checklist pre-tarea (Nunca olvides)
+## ✅ Checklist pre-tarea (resumen)
 
-Antes de empezar CUALQUIER tarea:
-
-```markdown
-□ Creé un TODO con los pasos?
-□ Leí master-context.md completamente?
-□ Leí rules.md?
-□ Identifiqué el rol que aplica?
-□ Leí el archivo de mi rol en agents/?
-□ Leí el SKILL.md relevante?
-□ Leí el EXAMPLES.md relevante?
-□ Entiendo los estándares de código?
-□ Sé qué patrón usar?
-□ ¿Voy a actualizar TODO a medida que avanzo?
-```
-
+Usa la checklist rápida en [.github/copilot-instructions.md](.github/copilot-instructions.md) antes de comenzar cualquier tarea.
 ---
 
 ## 🎯 Casos de uso por rol

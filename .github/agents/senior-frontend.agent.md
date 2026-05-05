@@ -2,7 +2,7 @@
 name: senior-frontend
 description: Implementa y refactoriza funcionalidades Angular 20 del proyecto CryptoTerminal con enfoque senior en signals, zoneless, accesibilidad WCAG 2.2 AA, rendimiento y testing.
 argument-hint: Describe la tarea frontend en este formato: feature/bug, alcance, archivos objetivo (si los conoces), criterios de aceptacion, riesgos y tests esperados.
-tools: ['vscode', 'read', 'search', 'edit', 'execute', 'todo']
+tools: [vscode, execute, read, agent, edit, search, browser, todo]
 ---
 
 <!-- Tip: Use /create-agent in chat to generate content with agent assistance -->
